@@ -1,13 +1,13 @@
 import { useState } from "react";
-import "./App.css";
+import Page1 from "./Page1";
+import Page2 from "./Page2";
 
 function App() {
   const [step, setStep] = useState(1);
 
   return (
-    <div className="md:h-screen md:w-screen md:flex md:items-center md:justify-center">
+    <div className="md:h-screen md:w-screen md:flex md:items-center md:justify-center relative z-10">
       <div className="px-5 md:px-14 w-full h-screen md:max-w-4xl md:h-[48rem] bg-white md:rounded-xl flex flex-col">
-
         {/* Logo */}
         <div className="pt-5 md:pt-12">
           <svg
@@ -45,35 +45,13 @@ function App() {
             ></div>
           </div>
         </div>
+        {/* Pages */}
+        <Page2 />
 
-        <div>
-          <h1 className="pt-3 font-bold text-xl text-[#303030]">
-            Let’s get started. Which of these best describes you?
-          </h1>
-          <span className="text-[0.875rem] text-[#616161]">
-            We’ll help you get set up based on your business needs.
-          </span>
-          <ul className="w-full">
-            <li className="w-full my-4 border rounded-md">
-              <label className="w-full h-full block radio" htmlFor="exp-1">
-                <input type="radio" id="exp-1" name="exp" />
-                <span className="text-sm font-light inline-block w-full h-full py-5">
-                  I'm just starting
-                </span>
-              </label>
-            </li>
-            <li className="w-full my-4 border rounded-md">
-              <label className="w-full h-full radio" htmlFor="exp-2">
-                <input type="radio" id="exp-2" name="exp" />
-                <span className="text-sm font-light inline-block w-full h-full py-5">
-                  I’m already selling online or in person
-                </span>
-              </label>
-            </li>
-          </ul>
-        </div>
-
-        <div className="w-full flex justify-end md:flex-1 md:place-items-end md:py-9">
+        <div className="w-full flex items-center justify-between md:flex-1 md:place-items-end md:py-9">
+          <div className="">
+            <button className="text-sm text-[#616161] py-2">&lt; Back</button>
+          </div>
           <div className="space-x-3">
             <button
               className="text-sm text-[#616161]"
