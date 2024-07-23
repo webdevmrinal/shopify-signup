@@ -15,7 +15,7 @@ const SignUp = () => {
       <div className="bg-white shadow-md rounded-lg p-8 max-w-4xl w-full flex">
         <div className="w-1/2 flex items-center justify-center">
           <img
-            src="https://academy.opengrowth.com/assets/images/courses/11.png"
+            src="https://placehold.co/400x600"
             alt="Signup"
             className="object-cover h-full w-full rounded-lg"
           />

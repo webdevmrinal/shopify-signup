@@ -5,6 +5,7 @@ import SignUp from "./SignUp";
 import { AnimatePresence, motion } from "framer-motion";
 function App() {
   const [step, setStep] = useState(1);
+  const [showSignUp, setShowSignUp] = useState(false);
 
   const renderPage = () => {
     if (step < 10) {
@@ -16,13 +17,19 @@ function App() {
 
   return (
     <>
-      {step <= 100 ? (
-        <AnimatePresence>
+      <AnimatePresence
+      // onExitComplete={() => {
+      //   if (step > 100) {
+      //     setShowSignUp(true);
+      //   }
+      // }}
+      >
+        {step <= 100 && (
           <motion.div
-            initial={{ opacity: 0, x: -100 }}
+            initial={{ opacity: 0, x: -75 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 50 }}
-            transition={{ ease: "easeIn", duration: 0.3 }}
+            exit={{ opacity: 0, x: -75 }}
+            transition={{ ease: "easeOut", duration: 0.3 }}
             className="md:h-screen md:w-screen md:flex md:items-center md:justify-center relative z-10"
           >
             <div className="px-5 md:px-14 w-full h-screen md:max-w-4xl md:h-[48rem] bg-white md:rounded-xl flex flex-col">
@@ -97,17 +104,19 @@ function App() {
               </div>
             </div>
           </motion.div>
-        </AnimatePresence>
-      ) : (
-          <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 50 }}
-            transition={{ ease: "easeIn", duration: 0.3 }}
-            className="fixed top-0 left-0 w-full h-full flex items-center justify-center"
-          >
-            <SignUp />
-          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {step > 100 && (
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 50 }}
+          transition={{ ease: "easeOut", duration: 0.3, delay: 0.47 }}
+          className="fixed top-0 left-0 w-full h-full flex items-center justify-center"
+        >
+          <SignUp />
+        </motion.div>
       )}
     </>
   );
