@@ -2,6 +2,7 @@ import { useState } from "react";
 import Page1 from "./Page1";
 import Page2 from "./Page2";
 import SignUp from "./SignUp";
+import SignupNew from "./SignupNew";
 import { AnimatePresence, motion } from "framer-motion";
 function App() {
   const [step, setStep] = useState(1);
@@ -109,13 +110,15 @@ function App() {
 
       {step > 100 && (
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
+          initial={{ opacity: 0 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ ease: "easeOut", duration: 0.3, delay: 0.47 }}
           className="fixed top-0 left-0 w-full h-full flex items-center justify-center"
         >
-          <SignUp />
+          <div className="h-screen w-screen overflow-y-scroll bg-white">
+            <SignupNew />
+          </div>
         </motion.div>
       )}
     </>
