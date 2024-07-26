@@ -120,8 +120,6 @@ const SignupPage = () => {
       title: "Grow",
       items: ["Business Solutions", "Marketing Services", "Consulting"],
     },
-    { title: "About Us", items: ["Our Story", "Team", "Careers"] },
-    { title: "Contact", items: ["Support", "Sales", "Partnerships"] },
   ];
 
   return (
@@ -148,6 +146,38 @@ const SignupPage = () => {
             {navItems.map((item, index) => (
               <NavMenuItem key={index} title={item.title} items={item.items} />
             ))}
+            <Button
+              sx={{
+                marginRight: 3,
+                fontWeight: "600",
+                fontSize: "1em",
+                textTransform: "capitalize",
+                "&:hover": {
+                  background: "transparent",
+                  textDecoration: "underline",
+                },
+              }}
+              color="inherit"
+              TouchRippleProps={{ style: { color: "transparent" } }}
+            >
+              About Us
+            </Button>
+            <Button
+              sx={{
+                marginRight: 3,
+                fontWeight: "600",
+                fontSize: "1em",
+                textTransform: "capitalize",
+                "&:hover": {
+                  background: "transparent",
+                  textDecoration: "underline",
+                },
+              }}
+              color="inherit"
+              TouchRippleProps={{ style: { color: "transparent" } }}
+            >
+              Contact
+            </Button>
             <Button
               variant="contained"
               color="primary"
@@ -546,7 +576,7 @@ const NavMenuItem = ({ title, items }) => {
           fontWeight: "600",
           fontSize: "1em",
           textTransform: "capitalize",
-          "&:hover": { background: "transparent" },
+          "&:hover": { background: "transparent", textDecoration: "underline" },
         }}
         TouchRippleProps={{ style: { color: "transparent" } }}
       >
