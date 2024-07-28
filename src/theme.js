@@ -6,12 +6,12 @@ const theme = createTheme({
       main: "#192756",
     },
     secondary: {
-      main: "#5a6978", // Custom secondary color
+      main: "#5a6978",
     },
   },
   text: {
-    primary: "#1A2027", // Custom primary text color
-    secondary: "#5a6978", // Custom secondary text color
+    primary: "#1A2027",
+    secondary: "#5a6978",
   },
 });
 

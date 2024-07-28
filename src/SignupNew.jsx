@@ -18,6 +18,7 @@ import {
   makeStyles,
   Menu,
 } from "@mui/material";
+import Footer from "./Footer";
 import {
   LinkedIn,
   Google,
@@ -189,7 +190,7 @@ const SignupPage = () => {
         </Toolbar>
       </AppBar>
 
-      <Container maxWidth="lg" sx={{ mt: 4 }}>
+      <Container maxWidth="lg" sx={{ mt: 4, pb:8 }}>
         <Grid
           container
           spacing={4}
@@ -469,84 +470,7 @@ const SignupPage = () => {
         </Grid>
       </Container>
 
-      <Box
-        component="footer"
-        sx={{
-          bgcolor: "#eff2f6",
-          py: 6,
-          mt: 4,
-          borderTop: "2px solid lightgray",
-        }}
-      >
-        <Container maxWidth="lg">
-          <Grid container spacing={4} justifyContent="space-between">
-            <Grid item xs={12} sm={6} md={3}>
-              <Link href="#">
-                <img
-                  src="https://www.opengrowth.com/assets/og/images/opengrowth-logo.png"
-                  alt="OpenGrowth Logo"
-                  style={{ height: "3.5em" }}
-                />
-              </Link>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Typography variant="h6" color="text.primary" gutterBottom>
-                Company
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                About Us
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Contact Us
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Complaints & Queries
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Typography variant="h6" color="text.primary" gutterBottom>
-                Products
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Mentorship
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Startup Services
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                OpenGrowth Hub
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Typography variant="h6" color="text.primary" gutterBottom>
-                Resources
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Help & Support
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Sitemap
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Terms & Conditions
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Privacy & Cookies Policy
-              </Typography>
-            </Grid>
-          </Grid>
-          <Box mt={5}>
-            <Typography variant="body2" color="text.secondary" align="center">
-              {"Copyright © "}
-              <Link color="inherit" href="https://opengrowth.com/">
-                OpenGrowth
-              </Link>{" "}
-              {new Date().getFullYear()}
-              {"."}
-            </Typography>
-          </Box>
-        </Container>
-      </Box>
+      <Footer />
     </Box>
   );
 };
