@@ -71,7 +71,7 @@ const Footer = () => {
             </Grid>
           ))}
         </Grid>
-        <Divider sx={{ my: 3, bgcolor: "black" }} />
+        <Divider sx={{ my: 3, bgcolor: "text.primary" }} />
         <Box
           mt={5}
           display="flex"
@@ -80,7 +80,7 @@ const Footer = () => {
           flexWrap="wrap"
         >
           <Box display="flex" alignItems="center" flexWrap="wrap">
-            <Typography variant="body2" color="text.secondary" mr={2}>
+            <Typography variant="body2" color="text.secondary" mr={3}>
               India
             </Typography>
             {["Terms of Service", "Privacy Policy", "Sitemap"].map((item) => (
@@ -88,7 +88,7 @@ const Footer = () => {
                 variant="body2"
                 color="text.secondary"
                 key={item}
-                mr={2}
+                mr={3}
               >
                 <Link href="#" color="inherit" underline="hover">
                   {item}
@@ -114,7 +114,7 @@ const Footer = () => {
                     },
                   }}
                 >
-                  <Icon fontSize="small" color="primary"/>
+                  <Icon fontSize="small" color="primary" />
                 </IconButton>
               )
             )}
