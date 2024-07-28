@@ -190,7 +190,7 @@ const SignupPage = () => {
         </Toolbar>
       </AppBar>
 
-      <Container maxWidth="lg" sx={{ mt: 4, pb:8 }}>
+      <Container maxWidth="lg" sx={{ mt: 4, pb: 12 }}>
         <Grid
           container
           spacing={4}
@@ -198,14 +198,19 @@ const SignupPage = () => {
           alignItems={"center"}
         >
           <Grid item xs={12} md={6}>
-            <img
-              src="https://picsum.photos/350/600"
+            <div
+              src=""
               alt="Collaboration"
               style={{
-                width: "100%",
+                width: "500px",
                 height: "700px",
                 overflow: "hidden",
                 borderRadius: "10px",
+                backgroundImage:
+                  "url(https://images.unsplash.com/photo-1590649917466-06e6e1c3e92d?fit=crop&w=500&h=700)",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
               }}
             />
           </Grid>
