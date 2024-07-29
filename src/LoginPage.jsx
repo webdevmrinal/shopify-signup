@@ -8,15 +8,13 @@ import {
   Container,
   Grid,
   TextField,
-  MenuItem,
   Box,
   IconButton,
   Link,
   Divider,
-  Autocomplete,
-  Chip,
   Paper,
   Menu,
+  MenuItem,
 } from "@mui/material";
 import Footer from "./Footer";
 import {
@@ -29,72 +27,6 @@ import {
 } from "@mui/icons-material";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import LoginPage from "./LoginPage";
-
-const interests = [
-  "Artificial Intelligence",
-  "Blogging",
-  "Dance",
-  "Data Science",
-  "Demand Engagement",
-  "Entrepreneur",
-  "Finance",
-  "Fractional",
-  "Human Resource",
-  "Leadership",
-  "Learning languages",
-];
-
-const countries = [
-  "United States",
-  "Canada",
-  "Mexico",
-  "Brazil",
-  "Argentina",
-  "United Kingdom",
-  "France",
-  "Germany",
-  "Italy",
-  "Spain",
-  "Australia",
-  "New Zealand",
-  "China",
-  "Japan",
-  "India",
-  "South Korea",
-  "South Africa",
-  "Nigeria",
-  "Egypt",
-  "Kenya",
-  "Russia",
-  "Turkey",
-  "Saudi Arabia",
-  "Iran",
-  "United Arab Emirates",
-  "Vietnam",
-  "Thailand",
-  "Indonesia",
-  "Malaysia",
-  "Philippines",
-  "Singapore",
-  "Pakistan",
-  "Bangladesh",
-  "Sri Lanka",
-  "Nepal",
-  "Israel",
-  "Jordan",
-  "Lebanon",
-  "Iraq",
-  "Syria",
-  "Ukraine",
-  "Poland",
-  "Czech Republic",
-  "Hungary",
-  "Sweden",
-  "Norway",
-  "Denmark",
-  "Finland",
-];
 
 const images = [
   "https://images.unsplash.com/photo-1590649917466-06e6e1c3e92d?fit=crop&w=500&h=700",
@@ -102,10 +34,8 @@ const images = [
   "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?fit=crop&w=500&h=700",
 ];
 
-const SignupPage = () => {
-  const [selectedInterests, setSelectedInterests] = useState([]);
+const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -113,10 +43,6 @@ const SignupPage = () => {
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
-  };
-
-  const handleChange = (event, newValue) => {
-    setSelectedInterests(newValue);
   };
 
   const navItems = [
@@ -143,10 +69,6 @@ const SignupPage = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {showLogin ? (
-        <LoginPage />
-      ) : (
-        <>
       <AppBar position="sticky" color="default" elevation={0}>
         <Toolbar
           sx={{
@@ -205,9 +127,8 @@ const SignupPage = () => {
               variant="contained"
               color="primary"
               sx={{ borderRadius: "2em" }}
-              onClick={() => setShowLogin(true)}
             >
-              Login
+              Signup
             </Button>
           </Box>
         </Toolbar>
@@ -245,7 +166,7 @@ const SignupPage = () => {
                 sx={{ px: 4, py: 1, fontWeight: "600" }}
                 gutterBottom
               >
-                Signup on OpenGrowth
+                Login to OpenGrowth
               </Typography>
               <Divider />
               <Box
@@ -272,7 +193,7 @@ const SignupPage = () => {
                   }}
                   TouchRippleProps={{ style: { color: "#0077B5" } }}
                 >
-                  Sign up with LinkedIn
+                  Login with LinkedIn
                 </Button>
                 <Button
                   startIcon={<Google sx={{ color: "#DB4437" }} />}
@@ -287,7 +208,7 @@ const SignupPage = () => {
                     },
                   }}
                 >
-                  Sign up with Google
+                  Login with Google
                 </Button>
                 <Button
                   startIcon={<Facebook sx={{ color: "#1877F2" }} />}
@@ -302,50 +223,12 @@ const SignupPage = () => {
                     },
                   }}
                 >
-                  Sign up with Facebook
+                  Login with Facebook
                 </Button>
               </Box>
               <Divider sx={{ px: 4, my: 2, fontSize: ".75em" }}>OR</Divider>
               <form style={{ padding: "0 2rem" }}>
                 <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <TextField
-                      fullWidth
-                      label={
-                        <>
-                          First Name <span style={{ color: "red" }}>*</span>
-                        </>
-                      }
-                      InputLabelProps={{
-                        sx: {
-                          "& .MuiInputLabel-asterisk": {
-                            display: "none",
-                          },
-                        },
-                      }}
-                      variant="outlined"
-                      required
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      fullWidth
-                      label={
-                        <>
-                          Last Name <span style={{ color: "red" }}>*</span>
-                        </>
-                      }
-                      InputLabelProps={{
-                        sx: {
-                          "& .MuiInputLabel-asterisk": {
-                            display: "none",
-                          },
-                        },
-                      }}
-                      variant="outlined"
-                      required
-                    />
-                  </Grid>
                   <Grid item xs={12}>
                     <TextField
                       fullWidth
@@ -397,72 +280,13 @@ const SignupPage = () => {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12}>
-                    <Autocomplete
-                      multiple
-                      id="interest-selector"
-                      options={interests}
-                      value={selectedInterests}
-                      onChange={handleChange}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          variant="outlined"
-                          label={
-                            <>
-                              Interest <span style={{ color: "red" }}>*</span>
-                            </>
-                          }
-                          InputLabelProps={{
-                            sx: {
-                              "& .MuiInputLabel-asterisk": {
-                                display: "none",
-                              },
-                            },
-                          }}
-                          placeholder="Select interests"
-                          required
-                        />
-                      )}
-                      renderTags={(value, getTagProps) =>
-                        value.map((option, index) => (
-                          <Chip
-                            key={option}
-                            variant="primary"
-                            label={option}
-                            {...getTagProps({ index })}
-                          />
-                        ))
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      select
-                      label={
-                        <>
-                          Country <span style={{ color: "red" }}>*</span>
-                        </>
-                      }
-                      InputLabelProps={{
-                        sx: {
-                          "& .MuiInputLabel-asterisk": {
-                            display: "none",
-                          },
-                        },
-                      }}
-                      variant="outlined"
-                      required
-                    >
-                      {countries.map((country, index) => {
-                        return (
-                          <MenuItem value={country} key={country}>
-                            {country}
-                          </MenuItem>
-                        );
-                      })}
-                    </TextField>
+                  <Grid item xs={12} sx={{ display: "flex", justifyContent: "space-between" }}>
+                    <Link href="#" variant="body2">
+                      Forgot password?
+                    </Link>
+                    <Link href="#" variant="body2">
+                      Sign up
+                    </Link>
                   </Grid>
                   <Grid
                     item
@@ -470,46 +294,22 @@ const SignupPage = () => {
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
                     <Button variant="contained" color="primary">
-                      Register Now
+                      Login
                     </Button>
                   </Grid>
                 </Grid>
               </form>
-              <Typography
-                color="secondary.main"
-                variant="body2"
-                sx={{ px: 4, m: 2, textAlign: "center" }}
-              >
-                By registering, I agree to the OpenGrowth Academy{" "}
-                <Link color="primary" href="#">
-                  Terms of Service
-                </Link>{" "}
-                and{" "}
-                <Link color="primary" href="#">
-                  Privacy Policy
-                </Link>
-              </Typography>
             </Paper>
-            <Typography
-              color="secondary.main"
-              variant="body2"
-              sx={{ mt: 2, textAlign: "center" }}
-            >
-              Are you interested in becoming an expert?{" "}
-              <Link href="#">Sign up here!</Link>
-            </Typography>
           </Grid>
         </Grid>
       </Container>
 
       <Footer />
-      </>
-      )}
     </Box>
   );
 };
 
-export default SignupPage;
+export default LoginPage;
 
 const NavMenuItem = ({ title, items }) => {
   const [anchorEl, setAnchorEl] = useState(null);
