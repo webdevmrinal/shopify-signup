@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Page1 from "./Page1";
 import Page2 from "./Page2";
-import SignUp from "./SignUp";
 import SignupNew from "./SignupNew";
 import { AnimatePresence, motion } from "framer-motion";
 function App() {

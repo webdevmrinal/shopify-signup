@@ -17,6 +17,8 @@ import {
   Chip,
   Paper,
   Menu,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import Footer from "./Footer";
 import {
@@ -103,9 +105,20 @@ const images = [
 ];
 
 const SignupPage = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    interest: [],
+    country: "",
+  });
+  const [open, setOpen] = useState(false);
   const [selectedInterests, setSelectedInterests] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -115,10 +128,64 @@ const SignupPage = () => {
     event.preventDefault();
   };
 
-  const handleChange = (event, newValue) => {
-    setSelectedInterests(newValue);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    console.log(`name: ${name}, value: ${value}`);
+    setFormData({ ...formData, [name]: value });
   };
-
+  const handleInterestChange = (event, newValue) => {
+    console.log(`Selected Interests: ${newValue}`);
+    setSelectedInterests(newValue);
+    setFormData({ ...formData, interest: newValue });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Submit button clicked");
+    console.log("FormData before submission: ", formData);
+    try {
+      const response = await fetch("http://localhost:5000/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        setSnackbarMessage("Data submitted successfully!");
+        setSnackbarSeverity("success");
+        setOpen(true);
+        // Reload the page after a successful submission
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000); // Adjust the timeout as needed
+      } else {
+        if (result.message === "User already exists.") {
+          setSnackbarMessage("User already exists. Please use a different email.");
+          setSnackbarSeverity("error");
+          setOpen(true);
+        } else {
+          setSnackbarMessage("Failed to submit data.");
+          setSnackbarSeverity("error");
+          setOpen(true);
+        }
+      }
+    } catch (error) {
+      setSnackbarMessage("Error submitting data.");
+      setSnackbarSeverity("error");
+      setOpen(true);
+    }
+  };
+  
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+  
   const navItems = [
     { title: "Hire", items: ["Find Talent", "Post a Job", "Hiring Solutions"] },
     {
@@ -140,6 +207,7 @@ const SignupPage = () => {
     autoplay: true,
     autoplaySpeed: 3000,
   };
+  
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -147,270 +215,174 @@ const SignupPage = () => {
         <LoginPage />
       ) : (
         <>
-      <AppBar position="sticky" color="default" elevation={0}>
-        <Toolbar
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "1em",
-            bgcolor: "white",
-            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-          }}
-        >
-          <Link href="#" flexGrow={0}>
-            <img
-              src="https://www.opengrowth.com/assets/og/images/opengrowth-logo.png"
-              alt="OpenGrowth Logo"
-              style={{ height: "3.5em" }}
-            />
-          </Link>
-
-          <Box>
-            {navItems.map((item, index) => (
-              <NavMenuItem key={index} title={item.title} items={item.items} />
-            ))}
-            <Button
+          <AppBar position="sticky" color="default" elevation={0}>
+            <Toolbar
               sx={{
-                marginRight: 3,
-                fontWeight: "600",
-                fontSize: "1em",
-                textTransform: "capitalize",
-                "&:hover": {
-                  background: "transparent",
-                  textDecoration: "underline",
-                },
+                display: "flex",
+                justifyContent: "space-between",
+                gap: "1em",
+                bgcolor: "white",
+                boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
               }}
-              color="inherit"
-              TouchRippleProps={{ style: { color: "transparent" } }}
             >
-              About Us
-            </Button>
-            <Button
-              sx={{
-                marginRight: 3,
-                fontWeight: "600",
-                fontSize: "1em",
-                textTransform: "capitalize",
-                "&:hover": {
-                  background: "transparent",
-                  textDecoration: "underline",
-                },
-              }}
-              color="inherit"
-              TouchRippleProps={{ style: { color: "transparent" } }}
-            >
-              Contact
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{ borderRadius: "2em" }}
-              onClick={() => setShowLogin(true)}
-            >
-              Login
-            </Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
-
-      <Container maxWidth="xl" sx={{ mt: 4, pb: 12 }}>
-        <Grid container spacing={4} justifyContent="center" alignItems={"center"}>
-          <Grid item xs={12} md={6}>
-            <Slider {...settings}>
-              {images.map((url, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    width: "100%",
-                    height: "700px",
-                    overflow: "hidden",
-                    borderRadius: "10px",
-                    backgroundImage: `url(${url})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                  }}
+              <Link href="#" flexGrow={0}>
+                <img
+                  src="https://www.opengrowth.com/assets/og/images/opengrowth-logo.png"
+                  alt="OpenGrowth Logo"
+                  style={{ height: "3.5em" }}
                 />
-              ))}
-            </Slider>
-          </Grid>
+              </Link>
 
-          <Grid item xs={12} md={6}>
-            <Paper
-              elevation={0}
-              sx={{ borderRadius: "16px", border: "1px solid lightgray" }}
-            >
-              <Typography
-                variant="h6"
-                sx={{ px: 4, py: 1, fontWeight: "600" }}
-                gutterBottom
-              >
-                Signup on OpenGrowth
-              </Typography>
-              <Divider />
-              <Box
-                sx={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: ".75em",
-                  mb: 2,
-                  px: 4,
-                  py: 1,
-                }}
-              >
+              <Box>
+                {navItems.map((item, index) => (
+                  <NavMenuItem key={index} title={item.title} items={item.items} />
+                ))}
                 <Button
-                  startIcon={<LinkedIn sx={{ color: "#0077B5" }} />}
-                  variant="outlined"
-                  fullWidth
                   sx={{
-                    py: 1,
-                    gridColumnStart: "span 2",
-                    border: "1px solid lightgray",
+                    marginRight: 3,
+                    fontWeight: "600",
+                    fontSize: "1em",
+                    textTransform: "capitalize",
                     "&:hover": {
-                      border: "1px solid lightgray",
+                      background: "transparent",
+                      textDecoration: "underline",
                     },
                   }}
-                  TouchRippleProps={{ style: { color: "#0077B5" } }}
+                  color="inherit"
+                  TouchRippleProps={{ style: { color: "transparent" } }}
                 >
-                  Sign up with LinkedIn
+                  About Us
                 </Button>
                 <Button
-                  startIcon={<Google sx={{ color: "#DB4437" }} />}
-                  variant="outlined"
-                  fullWidth
-                  TouchRippleProps={{ style: { color: "#DB4437" } }}
                   sx={{
-                    py: 1,
-                    border: "1px solid lightgray",
+                    marginRight: 3,
+                    fontWeight: "600",
+                    fontSize: "1em",
+                    textTransform: "capitalize",
                     "&:hover": {
-                      border: "1px solid lightgray",
+                      background: "transparent",
+                      textDecoration: "underline",
                     },
                   }}
+                  color="inherit"
+                  TouchRippleProps={{ style: { color: "transparent" } }}
                 >
-                  Sign up with Google
+                  Contact
                 </Button>
                 <Button
-                  startIcon={<Facebook sx={{ color: "#1877F2" }} />}
-                  variant="outlined"
-                  fullWidth
-                  TouchRippleProps={{ style: { color: "#1877F2" } }}
-                  sx={{
-                    py: 1,
-                    border: "1px solid lightgray",
-                    "&:hover": {
-                      border: "1px solid lightgray",
-                    },
-                  }}
+                  variant="contained"
+                  color="primary"
+                  sx={{ borderRadius: "2em" }}
+                  onClick={() => setShowLogin(true)}
                 >
-                  Sign up with Facebook
+                  Login
                 </Button>
               </Box>
-              <Divider sx={{ px: 4, my: 2, fontSize: ".75em" }}>OR</Divider>
-              <form style={{ padding: "0 2rem" }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <TextField
-                      fullWidth
-                      label={
-                        <>
-                          First Name <span style={{ color: "red" }}>*</span>
-                        </>
-                      }
-                      InputLabelProps={{
-                        sx: {
-                          "& .MuiInputLabel-asterisk": {
-                            display: "none",
-                          },
-                        },
-                      }}
-                      variant="outlined"
-                      required
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      fullWidth
-                      label={
-                        <>
-                          Last Name <span style={{ color: "red" }}>*</span>
-                        </>
-                      }
-                      InputLabelProps={{
-                        sx: {
-                          "& .MuiInputLabel-asterisk": {
-                            display: "none",
-                          },
-                        },
-                      }}
-                      variant="outlined"
-                      required
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      required
-                      label={
-                        <>
-                          Email Address <span style={{ color: "red" }}>*</span>
-                        </>
-                      }
-                      InputLabelProps={{
-                        sx: {
-                          "& .MuiInputLabel-asterisk": {
-                            display: "none",
-                          },
-                        },
-                      }}
-                      variant="outlined"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label={
-                        <>
-                          Password <span style={{ color: "red" }}>*</span>
-                        </>
-                      }
-                      InputLabelProps={{
-                        sx: {
-                          "& .MuiInputLabel-asterisk": {
-                            display: "none",
-                          },
-                        },
-                      }}
-                      type={showPassword ? "text" : "password"}
-                      variant="outlined"
-                      required
-                      InputProps={{
-                        endAdornment: (
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        ),
+            </Toolbar>
+          </AppBar>
+
+          <Container maxWidth="xl" sx={{ mt: 4, pb: 12 }}>
+            <Grid container spacing={4} justifyContent="center" alignItems={"center"}>
+              <Grid item xs={12} md={6}>
+                <Slider {...settings}>
+                  {images.map((url, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        width: "100%",
+                        height: "700px",
+                        overflow: "hidden",
+                        borderRadius: "10px",
+                        backgroundImage: `url(${url})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
                       }}
                     />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Autocomplete
-                      multiple
-                      id="interest-selector"
-                      options={interests}
-                      value={selectedInterests}
-                      onChange={handleChange}
-                      renderInput={(params) => (
+                  ))}
+                </Slider>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <Paper
+                  elevation={0}
+                  sx={{ borderRadius: "16px", border: "1px solid lightgray" }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{ px: 4, py: 1, fontWeight: "600" }}
+                    gutterBottom
+                  >
+                    Signup on OpenGrowth
+                  </Typography>
+                  <Divider />
+                  <Box
+                    sx={{
+                      display: "grid",
+                      gridTemplateColumns: "1fr 1fr",
+                      gap: ".75em",
+                      mb: 2,
+                      px: 4,
+                      py: 1,
+                    }}
+                  >
+                    <Button
+                      startIcon={<LinkedIn sx={{ color: "#0077B5" }} />}
+                      variant="outlined"
+                      fullWidth
+                      sx={{
+                        py: 1,
+                        gridColumnStart: "span 2",
+                        border: "1px solid lightgray",
+                        "&:hover": {
+                          border: "1px solid lightgray",
+                        },
+                      }}
+                      TouchRippleProps={{ style: { color: "#0077B5" } }}
+                    >
+                      Sign up with LinkedIn
+                    </Button>
+                    <Button
+                      startIcon={<Google sx={{ color: "#DB4437" }} />}
+                      variant="outlined"
+                      fullWidth
+                      TouchRippleProps={{ style: { color: "#DB4437" } }}
+                      sx={{
+                        py: 1,
+                        border: "1px solid lightgray",
+                        "&:hover": {
+                          border: "1px solid lightgray",
+                        },
+                      }}
+                    >
+                      Sign up with Google
+                    </Button>
+                    <Button
+                      startIcon={<Facebook sx={{ color: "#1877F2" }} />}
+                      variant="outlined"
+                      fullWidth
+                      TouchRippleProps={{ style: { color: "#1877F2" } }}
+                      sx={{
+                        py: 1,
+                        border: "1px solid lightgray",
+                        "&:hover": {
+                          border: "1px solid lightgray",
+                        },
+                      }}
+                    >
+                      Sign up with Facebook
+                    </Button>
+                  </Box>
+                  <Divider sx={{ px: 4, my: 2, fontSize: ".75em" }}>OR</Divider>
+                  <form style={{ padding: "0 2rem" }} onSubmit={handleSubmit}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={6}>
                         <TextField
-                          {...params}
-                          variant="outlined"
+                          fullWidth
+                          name="firstName"
                           label={
                             <>
-                              Interest <span style={{ color: "red" }}>*</span>
+                              First Name <span style={{ color: "red" }}>*</span>
                             </>
                           }
                           InputLabelProps={{
@@ -420,90 +392,207 @@ const SignupPage = () => {
                               },
                             },
                           }}
-                          placeholder="Select interests"
+                          variant="outlined"
+                          value={formData.firstName}
+                          onChange={handleChange}
                           required
                         />
-                      )}
-                      renderTags={(value, getTagProps) =>
-                        value.map((option, index) => (
-                          <Chip
-                            key={option}
-                            variant="primary"
-                            label={option}
-                            {...getTagProps({ index })}
-                          />
-                        ))
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      select
-                      label={
-                        <>
-                          Country <span style={{ color: "red" }}>*</span>
-                        </>
-                      }
-                      InputLabelProps={{
-                        sx: {
-                          "& .MuiInputLabel-asterisk": {
-                            display: "none",
-                          },
-                        },
-                      }}
-                      variant="outlined"
-                      required
-                    >
-                      {countries.map((country, index) => {
-                        return (
-                          <MenuItem value={country} key={country}>
-                            {country}
-                          </MenuItem>
-                        );
-                      })}
-                    </TextField>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    sx={{ display: "flex", justifyContent: "center" }}
-                  >
-                    <Button variant="contained" color="primary">
-                      Register Now
-                    </Button>
-                  </Grid>
-                </Grid>
-              </form>
-              <Typography
-                color="secondary.main"
-                variant="body2"
-                sx={{ px: 4, m: 2, textAlign: "center" }}
-              >
-                By registering, I agree to the OpenGrowth Academy{" "}
-                <Link color="primary" href="#">
-                  Terms of Service
-                </Link>{" "}
-                and{" "}
-                <Link color="primary" href="#">
-                  Privacy Policy
-                </Link>
-              </Typography>
-            </Paper>
-            <Typography
-              color="secondary.main"
-              variant="body2"
-              sx={{ mt: 2, textAlign: "center" }}
-            >
-              Are you interested in becoming an expert?{" "}
-              <Link href="#">Sign up here!</Link>
-            </Typography>
-          </Grid>
-        </Grid>
-      </Container>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TextField
+                          fullWidth
+                          name="lastName"
+                          label={
+                            <>
+                              Last Name <span style={{ color: "red" }}>*</span>
+                            </>
+                          }
+                          InputLabelProps={{
+                            sx: {
+                              "& .MuiInputLabel-asterisk": {
+                                display: "none",
+                              },
+                            },
+                          }}
+                          variant="outlined"
+                          value={formData.lastName}
+                          onChange={handleChange}
+                          required
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          required
+                          name="email"
+                          label={
+                            <>
+                              Email Address <span style={{ color: "red" }}>*</span>
+                            </>
+                          }
+                          InputLabelProps={{
+                            sx: {
+                              "& .MuiInputLabel-asterisk": {
+                                display: "none",
+                              },
+                            },
+                          }}
+                          variant="outlined"
+                          value={formData.email}
+                          onChange={handleChange}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          name="password"
+                          label={
+                            <>
+                              Password <span style={{ color: "red" }}>*</span>
+                            </>
+                          }
+                          InputLabelProps={{
+                            sx: {
+                              "& .MuiInputLabel-asterisk": {
+                                display: "none",
+                              },
+                            },
+                          }}
+                          type={showPassword ? "text" : "password"}
+                          variant="outlined"
+                          value={formData.password}
+                          onChange={handleChange}
+                          required
+                          InputProps={{
+                            endAdornment: (
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                              >
+                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                              </IconButton>
+                            ),
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Autocomplete
+                          multiple
+                          id="interest-selector"
+                          options={interests} // This should be an array
+                          value={selectedInterests} // This should be an array
+                          onChange={handleInterestChange}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              variant="outlined"
+                              label={
+                                <>
+                                  Interest <span style={{ color: "red" }}>*</span>
+                                </>
+                              }
+                              InputLabelProps={{
+                                sx: {
+                                  "& .MuiInputLabel-asterisk": {
+                                    display: "none",
+                                  },
+                                },
+                              }}
+                              placeholder="Select interests"
+                              // required
+                            />
+                          )}
+                          renderTags={(value, getTagProps) =>
+                            value.map((option, index) => (
+                              <Chip
+                                key={option}
+                                variant="primary"
+                                label={option}
+                                {...getTagProps({ index })}
+                              />
+                            ))
+                          }
+                        />
 
-      <Footer />
-      </>
+                      </Grid>
+
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          select
+                          name="country"
+                          label={
+                            <>
+                              Country <span style={{ color: "red" }}>*</span>
+                            </>
+                          }
+                          InputLabelProps={{
+                            sx: {
+                              "& .MuiInputLabel-asterisk": {
+                                display: "none",
+                              },
+                            },
+                          }}
+                          variant="outlined"
+                          value={formData.country}
+                          required
+                          onChange={handleChange}
+                        >
+                          {countries.map((country, index) => (
+                            <MenuItem value={country} key={index}>
+                              {country}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+
+                      </Grid>
+                      <Grid
+                        item
+                        xs={12}
+                        sx={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <Button variant="contained" color="primary" type="submit" >
+                          Register Now
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </form>
+                  <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+            <Alert onClose={handleClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+              {snackbarMessage}
+            </Alert>
+          </Snackbar>
+                  <Typography
+                    color="secondary.main"
+                    variant="body2"
+                    sx={{ px: 4, m: 2, textAlign: "center" }}
+                  >
+                    By registering, I agree to the OpenGrowth Academy{" "}
+                    <Link color="primary" href="#">
+                      Terms of Service
+                    </Link>{" "}
+                    and{" "}
+                    <Link color="primary" href="#">
+                      Privacy Policy
+                    </Link>
+                  </Typography>
+                </Paper>
+                <Typography
+                  color="secondary.main"
+                  variant="body2"
+                  sx={{ mt: 2, textAlign: "center" }}
+                >
+                  Are you interested in becoming an expert?{" "}
+                  <Link href="#">Sign up here!</Link>
+                </Typography>
+              </Grid>
+            </Grid>
+          </Container>
+
+          <Footer />
+        </>
       )}
     </Box>
   );
