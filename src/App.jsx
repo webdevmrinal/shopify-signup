@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Page1 from "./Page1";
 import Page2 from "./Page2";
-import SignUp from "./SignUp";
-import SignupNew from "./SignupNew";
 import { AnimatePresence, motion } from "framer-motion";
+import OGLogo from "./assets/OG-Logo.svg";
+import { useNavigate } from "react-router-dom";
+
 function App() {
   const [step, setStep] = useState(1);
   const [showSignUp, setShowSignUp] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (step > 100) {
+      navigate("/signup");
+    }
+  }, [step, navigate]);
 
   const renderPage = () => {
     if (step < 10) {
@@ -33,20 +42,10 @@ function App() {
             transition={{ ease: "easeOut", duration: 0.3 }}
             className="md:h-screen md:w-screen md:flex md:items-center md:justify-center relative z-10"
           >
-            <div className="px-5 md:px-14 w-full h-screen md:max-w-4xl md:h-[48rem] bg-white md:rounded-xl flex flex-col">
+            <div className="px-5 md:px-14 w-full h-screen md:max-w-4xl md:h-[48rem] bg-white md:rounded-xl flex flex-col shadow-lg border">
               {/* Logo */}
               <div className="pt-5 md:pt-12">
-                <svg
-                  aria-hidden="true"
-                  focusable="false"
-                  width="92"
-                  height="26"
-                  viewBox="0 0 92 26"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                
-                </svg>
+                <img src={OGLogo} alt="opengrowth-logo" className="h-12" />
               </div>
               {/* Bar */}
               <div className="w-full my-5">
@@ -62,7 +61,7 @@ function App() {
               </div>
               {/* Pages */}
               {renderPage()}
-              <div className="w-full flex items-center justify-between md:flex-1 md:place-items-end md:py-9">
+              <div className="w-full flex items-center justify-between md:flex-1 md:place-items-end md:pb-6">
                 <div className="">
                   <button
                     className="text-sm text-[#616161] py-2"
@@ -74,7 +73,7 @@ function App() {
                 <div className="space-x-3">
                   <button
                     className="text-sm text-[#616161]"
-                    onClick={() => setStep(100)}
+                    onClick={() => setStep(101)}
                   >
                     Skip All
                   </button>
@@ -97,7 +96,7 @@ function App() {
         )}
       </AnimatePresence>
 
-      {step > 100 && (
+      {/* {step > 100 && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, x: 0 }}
@@ -109,7 +108,7 @@ function App() {
             <SignupNew />
           </div>
         </motion.div>
-      )}
+      )} */}
     </>
   );
 }

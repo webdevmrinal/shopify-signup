@@ -12,6 +12,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import OGLogo from "./assets/OG-Logo.svg";
 
 const Footer = () => {
   const footerSections = [
@@ -40,11 +41,22 @@ const Footer = () => {
       sx={{ bgcolor: "#f8f9fa", py: 5, borderTop: "2px solid lightgray" }}
     >
       <Container maxWidth="lg">
-        <Grid container spacing={4}>
+        <Grid
+          container
+          spacing={4}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
           <Grid item xs={12} sm={3}>
-            <Box display="flex" alignItems="center" mb={2}>
+            <Box
+              mb={2}
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
               <img
-                src="https://www.opengrowth.com/assets/og/images/opengrowth-logo.png"
+                src={OGLogo}
                 alt="OpenGrowth Logo"
                 style={{ height: "3.5em", marginRight: 8 }}
               />
@@ -55,14 +67,22 @@ const Footer = () => {
               <Typography
                 variant="subtitle1"
                 color="text.primary"
-                fontSize={"1.2em"}
-                fontWeight={"500"}
+                fontWeight={"600"}
+                sx={{ textTransform: "uppercase" }}
                 gutterBottom
+                textAlign={"center"}
               >
                 {section.title}
               </Typography>
               {section.items.map((item) => (
-                <Typography variant="body2" color="text.secondary" key={item}>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  fontSize={12}
+                  key={item}
+                  sx={{ textTransform: "uppercase" }}
+                  textAlign={"center"}
+                >
                   <Link href="#" color="inherit" underline="hover">
                     {item}
                   </Link>
@@ -75,9 +95,14 @@ const Footer = () => {
         <Box
           mt={5}
           display="flex"
-          justifyContent="space-between"
           alignItems="center"
           flexWrap="wrap"
+          sx={{
+            justifyContent: {
+              xs: "center",
+              md: "space-between",
+            },
+          }}
         >
           <Box display="flex" alignItems="center" flexWrap="wrap">
             <Typography variant="body2" color="text.secondary" mr={3}>
@@ -96,7 +121,7 @@ const Footer = () => {
               </Typography>
             ))}
           </Box>
-          <Box>
+          <Box display="flex" justifyContent="center" alignItems="center">
             {[FacebookIcon, TwitterIcon, LinkedInIcon, InstagramIcon].map(
               (Icon, index) => (
                 <IconButton
