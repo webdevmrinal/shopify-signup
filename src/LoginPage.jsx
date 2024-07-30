@@ -236,7 +236,7 @@ const LoginPage = () => {
         </Box>
       </Drawer>
 
-      <Container maxWidth="xl" sx={{ mt: 4, pb: 12 }}>
+      <Container maxWidth="xl" sx={{ mt: 4, pb: 12 }} className="md:border md:mb-6 md:pt-6 md:shadow-lg md:rounded-xl">
         <Grid
           container
           spacing={4}

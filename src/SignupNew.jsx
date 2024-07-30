@@ -262,7 +262,14 @@ const SignupPage = () => {
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
-          <Box sx={{padding:"2.5em 1em",display:"flex", flexDirection:"column", gap:"1.5em"}}>
+          <Box
+            sx={{
+              padding: "2.5em 1em",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1.5em",
+            }}
+          >
             {navItems.map((item, index) => (
               <NavMenuItem key={index} title={item.title} items={item.items} />
             ))}
@@ -310,7 +317,11 @@ const SignupPage = () => {
         </Box>
       </Drawer>
 
-      <Container maxWidth="xl" sx={{ mt: 4, pb: 12 }}>
+      <Container
+        maxWidth="xl"
+        sx={{ mt: 4, pb: 12 }}
+        className="md:border md:mb-6 md:pt-6 md:shadow-lg md:rounded-xl"
+      >
         <Grid
           container
           spacing={4}
