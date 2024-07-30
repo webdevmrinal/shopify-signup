@@ -31,6 +31,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useNavigate } from "react-router-dom";
 import OGLogo from "./assets/OG-Logo.svg";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const images = [
   "https://images.unsplash.com/photo-1590649917466-06e6e1c3e92d?fit=crop&w=500&h=700",
@@ -43,6 +45,24 @@ const LoginPage = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const navigate = useNavigate();
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required"),
+      password: Yup.string()
+        .min(8, "Password must be at least 8 characters")
+        .required("Password is required"),
+    }),
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -188,7 +208,14 @@ const LoginPage = () => {
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
-          <Box sx={{padding:"2.5em 1em",display:"flex", flexDirection:"column", gap:"1.5em"}}>
+          <Box
+            sx={{
+              padding: "2.5em 1em",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1.5em",
+            }}
+          >
             {navItems.map((item, index) => (
               <NavMenuItem key={index} title={item.title} items={item.items} />
             ))}
@@ -236,7 +263,11 @@ const LoginPage = () => {
         </Box>
       </Drawer>
 
-      <Container maxWidth="xl" sx={{ mt: 4, pb: 12 }} className="md:border md:mb-6 md:pt-6 md:shadow-lg md:rounded-xl">
+      <Container
+        maxWidth="xl"
+        sx={{ mt: 4, pb: 12 }}
+        className="md:border md:mb-6 md:pt-6 md:shadow-lg md:rounded-xl"
+      >
         <Grid
           container
           spacing={4}
@@ -331,7 +362,10 @@ const LoginPage = () => {
                 ></Button>
               </Box>
               <Divider sx={{ px: 4, my: 2, fontSize: ".75em" }}>OR</Divider>
-              <form style={{ padding: "0 2rem" }}>
+              <form
+                onSubmit={formik.handleSubmit}
+                style={{ padding: "0 2rem" }}
+              >
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <TextField
@@ -350,6 +384,11 @@ const LoginPage = () => {
                         },
                       }}
                       variant="outlined"
+                      {...formik.getFieldProps("email")}
+                      error={
+                        formik.touched.email && Boolean(formik.errors.email)
+                      }
+                      helperText={formik.touched.email && formik.errors.email}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -370,6 +409,14 @@ const LoginPage = () => {
                       type={showPassword ? "text" : "password"}
                       variant="outlined"
                       required
+                      {...formik.getFieldProps("password")}
+                      error={
+                        formik.touched.password &&
+                        Boolean(formik.errors.password)
+                      }
+                      helperText={
+                        formik.touched.password && formik.errors.password
+                      }
                       InputProps={{
                         endAdornment: (
                           <IconButton
@@ -402,7 +449,7 @@ const LoginPage = () => {
                     xs={12}
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" type="submit">
                       Login
                     </Button>
                   </Grid>

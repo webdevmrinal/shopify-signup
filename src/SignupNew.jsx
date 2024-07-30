@@ -37,6 +37,8 @@ import "slick-carousel/slick/slick-theme.css";
 import LoginPage from "./LoginPage";
 import OGLogo from "./assets/OG-Logo.svg";
 import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const interests = [
   "Artificial Intelligence",
@@ -115,6 +117,34 @@ const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
+
+  const validationSchema = Yup.object({
+    firstName: Yup.string().required("First name is required"),
+    lastName: Yup.string().required("Last name is required"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+    password: Yup.string()
+      .min(8, "Password should be at least 8 characters long")
+      .required("Password is required"),
+    interests: Yup.array().min(1, "At least one interest is required"),
+    country: Yup.string().required("Country is required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      interests: [],
+      country: "",
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      console.log("Form data", values);
+    },
+  });
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -413,7 +443,10 @@ const SignupPage = () => {
                 ></Button>
               </Box>
               <Divider sx={{ px: 4, my: 2, fontSize: ".75em" }}>OR</Divider>
-              <form style={{ padding: "0 2rem" }}>
+              <form
+                onSubmit={formik.handleSubmit}
+                style={{ padding: "0 2rem" }}
+              >
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
                     <TextField
@@ -431,6 +464,14 @@ const SignupPage = () => {
                         },
                       }}
                       variant="outlined"
+                      {...formik.getFieldProps("firstName")}
+                      error={
+                        formik.touched.firstName &&
+                        Boolean(formik.errors.firstName)
+                      }
+                      helperText={
+                        formik.touched.firstName && formik.errors.firstName
+                      }
                       required
                     />
                   </Grid>
@@ -451,6 +492,14 @@ const SignupPage = () => {
                       }}
                       variant="outlined"
                       required
+                      {...formik.getFieldProps("lastName")}
+                      error={
+                        formik.touched.lastName &&
+                        Boolean(formik.errors.lastName)
+                      }
+                      helperText={
+                        formik.touched.lastName && formik.errors.lastName
+                      }
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -470,6 +519,11 @@ const SignupPage = () => {
                         },
                       }}
                       variant="outlined"
+                      {...formik.getFieldProps("email")}
+                      error={
+                        formik.touched.email && Boolean(formik.errors.email)
+                      }
+                      helperText={formik.touched.email && formik.errors.email}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -490,6 +544,14 @@ const SignupPage = () => {
                       type={showPassword ? "text" : "password"}
                       variant="outlined"
                       required
+                      {...formik.getFieldProps("password")}
+                      error={
+                        formik.touched.password &&
+                        Boolean(formik.errors.password)
+                      }
+                      helperText={
+                        formik.touched.password && formik.errors.password
+                      }
                       InputProps={{
                         endAdornment: (
                           <IconButton
@@ -507,40 +569,30 @@ const SignupPage = () => {
                   <Grid item xs={12}>
                     <Autocomplete
                       multiple
-                      id="interest-selector"
+                      id="interests"
+                      required
                       options={interests}
-                      value={selectedInterests}
-                      onChange={handleChange}
+                      getOptionLabel={(option) => option}
+                      value={formik.values.interests}
+                      onChange={(event, value) => {
+                        formik.setFieldValue("interests", value);
+                        formik.setFieldTouched("interests", true);
+                      }}
+                      onBlur={() => formik.setFieldTouched("interests", true)}
                       renderInput={(params) => (
                         <TextField
                           {...params}
+                          label="Interests"
                           variant="outlined"
-                          label={
-                            <>
-                              Interest <span style={{ color: "red" }}>*</span>
-                            </>
+                          error={
+                            formik.touched.interests &&
+                            Boolean(formik.errors.interests)
                           }
-                          InputLabelProps={{
-                            sx: {
-                              "& .MuiInputLabel-asterisk": {
-                                display: "none",
-                              },
-                            },
-                          }}
-                          placeholder="Select interests"
-                          required
+                          helperText={
+                            formik.touched.interests && formik.errors.interests
+                          }
                         />
                       )}
-                      renderTags={(value, getTagProps) =>
-                        value.map((option, index) => (
-                          <Chip
-                            key={option}
-                            variant="primary"
-                            label={option}
-                            {...getTagProps({ index })}
-                          />
-                        ))
-                      }
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -561,6 +613,13 @@ const SignupPage = () => {
                       }}
                       variant="outlined"
                       required
+                      {...formik.getFieldProps("country")}
+                      error={
+                        formik.touched.country && Boolean(formik.errors.country)
+                      }
+                      helperText={
+                        formik.touched.country && formik.errors.country
+                      }
                     >
                       {countries.map((country, index) => {
                         return (
@@ -576,7 +635,7 @@ const SignupPage = () => {
                     xs={12}
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" type="submit">
                       Register Now
                     </Button>
                   </Grid>
