@@ -14,16 +14,24 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log('Current step:', step);
     if (step > 100) {
       navigate("/signup");
     }
   }, [step, navigate]);
+  const handleBack = () => {
+    console.log('Back button clicked');
+    setStep(10); // Navigate back to Page2
+  };
 
   const renderPage = () => {
     if (step < 10) {
       return <Page1 />;
     } else if (step >= 10 && step < 100) {
       return <Page2 />;
+    }
+    else if (step >= 100) {
+      return <SignupPage onBack={handleBack} />;
     }
   };
 
@@ -39,13 +47,15 @@ function App() {
       >
         {step <= 100 && (
           <motion.div
+          style={{ paddingTop: '20px', marginBottom: '20px' }}
             initial={{ opacity: 0, x: -75 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -75 }}
             transition={{ ease: "easeOut", duration: 0.3 }}
             className="md:h-screen md:w-screen md:flex md:items-center md:justify-center relative z-10"
           >
-            <div className="px-5 md:px-14 w-full h-screen md:max-w-4xl md:h-[48rem] bg-white md:rounded-xl flex flex-col shadow-lg border">
+            <div className="px-5 md:px-14 w-full h-screen md:max-w-4xl md:h-[48rem] bg-white md:rounded-xl flex flex-col shadow-lg border"
+            style={{ maxWidth: '91rem' }}>
               {/* Logo */}
               {/* <div className="pt-5 md:pt-12">
                 <img src={OGLogo} alt="opengrowth-logo" className="h-12" />
@@ -99,7 +109,6 @@ function App() {
         )}
       </AnimatePresence>
       <Footer />
-
       {/* {step > 100 && (
         <motion.div
           initial={{ opacity: 0 }}

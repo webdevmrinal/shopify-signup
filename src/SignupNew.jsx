@@ -109,10 +109,11 @@ const images = [
   "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?fit=crop&w=500&h=700",
 ];
 
-const SignupPage = () => {
+const SignupPage = ({onBack}) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedInterests, setSelectedInterests] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
+  const [step, setStep] = useState(1);
 
   const navigate = useNavigate();
 
@@ -124,6 +125,9 @@ const SignupPage = () => {
     event.preventDefault();
   };
 
+  const handleBack = () => {
+    setStep(1); // Navigate back to Page 2
+  };
   const handleChange = (event, newValue) => {
     setSelectedInterests(newValue);
   };
@@ -136,6 +140,53 @@ const SignupPage = () => {
       return;
     }
     setDrawerOpen(open);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Submit button clicked");
+    console.log("FormData before submission: ", formData);
+    try {
+      const response = await fetch("http://localhost:5000/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        setSnackbarMessage("Data submitted successfully!");
+        setSnackbarSeverity("success");
+        setOpen(true);
+        // Reload the page after a successful submission
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000); // Adjust the timeout as needed
+      } else {
+        if (result.message === "User already exists.") {
+          setSnackbarMessage("User already exists. Please use a different email.");
+          setSnackbarSeverity("error");
+          setOpen(true);
+        } else {
+          setSnackbarMessage("Failed to submit data.");
+          setSnackbarSeverity("error");
+          setOpen(true);
+        }
+      }
+    } catch (error) {
+      setSnackbarMessage("Error submitting data.");
+      setSnackbarSeverity("error");
+      setOpen(true);
+    }
+  };
+  
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
   };
 
   const navItems = [
@@ -176,7 +227,7 @@ const SignupPage = () => {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ display: { xs: "flex", md: "none" } }}
+            sx={{ display: { xs: "flex", md: "none"} }}
             onClick={toggleDrawer(true)}
           >
             <MenuIcon />
@@ -241,7 +292,7 @@ const SignupPage = () => {
             <Button
               variant="contained"
               color="primary"
-              sx={{ borderRadius: "2em" }}
+              sx={{ borderRadius: "2em" ,textTransform: "none", marginRight: 2 }}
               onClick={() => navigate("/login")}
             >
               Login
@@ -257,7 +308,7 @@ const SignupPage = () => {
         sx={{ display: { xs: "flex", md: "none" } }}
       >
         <Box
-          sx={{ width: 250 }}
+          sx={{ width: 220 }}
           role="presentation"
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
@@ -318,8 +369,15 @@ const SignupPage = () => {
       </Drawer>
 
       <Container
-        maxWidth="xl"
-        sx={{ mt: 4, pb: 12 }}
+        maxWidth="l"
+        sx={{
+          mt: 4,
+          pb: 3,
+          maxWidth: '1462px', // Set custom maxWidth
+          border: '1px solid lightgray', // Apply additional styling if needed
+          borderRadius: '16px', // Apply additional styling if needed
+          boxShadow: '0px 4px 8px rgba(0,0,0,0.1)', // Apply additional styling if needed
+        }}
         className="md:border md:mb-6 md:pt-6 md:shadow-lg md:rounded-xl"
       >
         <Grid
@@ -354,10 +412,17 @@ const SignupPage = () => {
               sx={{ borderRadius: "16px", border: "1px solid lightgray" }}
             >
               <Typography
-                variant="h6"
-                sx={{ px: 4, py: 1, fontWeight: "600" }}
-                gutterBottom
-              >
+    variant="h5"
+    sx={{
+      px: 4,
+      py: 2,
+      fontWeight: "700", 
+      color: "primary.main", 
+      textAlign: "center",
+      fontFamily: "'Poppins', sans-serif", 
+    }}
+    gutterBottom
+  >
                 Signup on OpenGrowth
               </Typography>
               <Divider />
@@ -372,7 +437,7 @@ const SignupPage = () => {
                 }}
               >
                 <Button
-                  startIcon={<LinkedIn sx={{ color: "#0077B5" }} />}
+                  startIcon={<LinkedIn sx={{ color: "#0077B5", fontSize: '30px' }} />}
                   variant="outlined"
                   fullWidth
                   sx={{
@@ -576,7 +641,7 @@ const SignupPage = () => {
                     xs={12}
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" type="submit" sx={{ width: '100%' }} >
                       Register Now
                     </Button>
                   </Grid>
@@ -607,6 +672,37 @@ const SignupPage = () => {
             </Typography>
           </Grid>
         </Grid>
+        <div className="w-full flex items-center justify-between md:flex-1 md:place-items-end md:pb-6">
+                <div className="">
+                <button className="text-sm text-[#616161] py-2"
+                style={{ marginTop: '3em' }} onClick={() => {
+    console.log('Back button in SignupPage clicked');
+    onBack;
+  }}>
+                      &lt; Back
+                    </button>
+                </div>
+                <div className="space-x-3">
+                  {/* <button
+                    className="text-sm text-[#616161]"
+                    onClick={() => setStep(101)}
+                  >
+                    Skip All
+                  </button>
+                  <button
+                    className="text-sm text-[#616161]"
+                    onClick={() => setStep(step < 100 ? step + 100 / 2 : step)}
+                  >
+                    Skip
+                  </button>
+                  <button
+                    className="px-3 py-2 rounded-lg text-sm font-medium bg-[#3f3f3f] text-white"
+                    onClick={() => setStep(step < 100 ? step + 100 / 2 : step)}
+                  >
+                    Next
+                  </button> */}
+                </div>
+              </div>
       </Container>
 
       <Footer />

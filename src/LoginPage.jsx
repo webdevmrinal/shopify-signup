@@ -165,7 +165,7 @@ const LoginPage = () => {
             <Button
               variant="contained"
               color="primary"
-              sx={{ borderRadius: "2em" }}
+              sx={{ borderRadius: "2em", textTransform: 'none', marginRight: 2 }}
               onClick={() => {
                 navigate("/signup");
               }}
@@ -227,7 +227,7 @@ const LoginPage = () => {
             <Button
               variant="contained"
               color="primary"
-              sx={{ borderRadius: "2em" }}
+              sx={{ borderRadius: "2em" , textTransform: 'none'}}
               onClick={() => navigate("/signup")}
             >
               Sign Up
@@ -236,7 +236,14 @@ const LoginPage = () => {
         </Box>
       </Drawer>
 
-      <Container maxWidth="xl" sx={{ mt: 4, pb: 12 }} className="md:border md:mb-6 md:pt-6 md:shadow-lg md:rounded-xl">
+      <Container maxWidth="l" sx={{
+          mt: 4,
+          pb: 12,
+          maxWidth: '1462px', // Set custom maxWidth
+          border: '1px solid lightgray', // Apply additional styling if needed
+          borderRadius: '16px', // Apply additional styling if needed
+          boxShadow: '0px 4px 8px rgba(0,0,0,0.1)', // Apply additional styling if needed
+        }} className="md:border md:mb-6 md:pt-6 md:shadow-lg md:rounded-xl">
         <Grid
           container
           spacing={4}
@@ -272,11 +279,18 @@ const LoginPage = () => {
               }}
             >
               <Typography
-                variant="h6"
-                sx={{ px: 4, py: 1, fontWeight: "600" }}
-                gutterBottom
-              >
-                Login to OpenGrowth
+    variant="h5" // Adjust variant for different font sizes
+    sx={{
+      px: 4,
+      py: 2,
+      fontWeight: "700", // Adjust font weight for emphasis
+      color: "primary.main", // Use primary color or any color you prefer
+      textAlign: "center", // Center the text
+      fontFamily: "'Roboto', sans-serif", // Use a specific font family
+    }}
+    gutterBottom
+  >
+                SignIn to OpenGrowth
               </Typography>
               <Divider />
               <Box
@@ -402,7 +416,7 @@ const LoginPage = () => {
                     xs={12}
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" type="submit" sx={{ width: '100%' }} >
                       Login
                     </Button>
                   </Grid>

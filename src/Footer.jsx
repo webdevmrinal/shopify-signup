@@ -67,7 +67,8 @@ const Footer = () => {
               <Typography
                 variant="subtitle1"
                 color="text.primary"
-                fontWeight={"600"}
+                fontWeight={"400"}
+                fontSize={14}
                 sx={{ textTransform: "uppercase" }}
                 gutterBottom
                 textAlign={"center"}
@@ -78,7 +79,8 @@ const Footer = () => {
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  fontSize={12}
+                  fontSize={13}
+
                   key={item}
                   // sx={{ textTransform: "uppercase" }}
                   textAlign={"center"}
