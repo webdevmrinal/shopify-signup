@@ -3,7 +3,7 @@ import Page1 from "./Page1";
 import Page2 from "./Page2";
 import { AnimatePresence, motion } from "framer-motion";
 import OGLogo from "./assets/OG-Logo.svg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -29,13 +29,8 @@ function App() {
 
   return (
     <>
-    <Header />
+      <Header />
       <AnimatePresence
-      // onExitComplete={() => {
-      //   if (step > 100) {
-      //     setShowSignUp(true);
-      //   }
-      // }}
       >
         {step <= 100 && (
           <motion.div
@@ -46,11 +41,6 @@ function App() {
             className="md:h-screen md:w-screen md:flex md:items-center md:justify-center relative z-10"
           >
             <div className="px-5 md:px-14 w-full h-screen md:max-w-4xl md:h-[48rem] bg-white md:rounded-xl flex flex-col shadow-lg border">
-              {/* Logo */}
-              {/* <div className="pt-5 md:pt-12">
-                <img src={OGLogo} alt="opengrowth-logo" className="h-12" />
-              </div> */}
-              {/* Bar */}
               <div className="w-full my-5">
                 <div className="h-2 bg-[#e3e3e3] rounded-full overflow-hidden">
                   <div

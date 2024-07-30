@@ -33,6 +33,7 @@ import { useNavigate } from "react-router-dom";
 import OGLogo from "./assets/OG-Logo.svg";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { FacebookIcon, GoogleIcon, LinkedInIcon } from "./Icons";
 
 const images = [
   "https://images.unsplash.com/photo-1590649917466-06e6e1c3e92d?fit=crop&w=500&h=700",
@@ -321,7 +322,7 @@ const LoginPage = () => {
                 }}
               >
                 <Button
-                  startIcon={<LinkedIn sx={{ color: "#0077B5" }} />}
+                  startIcon={<LinkedInIcon height={30} />}
                   variant="outlined"
                   fullWidth
                   sx={{
@@ -335,7 +336,7 @@ const LoginPage = () => {
                   TouchRippleProps={{ style: { color: "#0077B5" } }}
                 ></Button>
                 <Button
-                  startIcon={<Google sx={{ color: "#DB4437" }} />}
+                  startIcon={<GoogleIcon height={28} />}
                   variant="outlined"
                   fullWidth
                   TouchRippleProps={{ style: { color: "#DB4437" } }}
@@ -348,7 +349,7 @@ const LoginPage = () => {
                   }}
                 ></Button>
                 <Button
-                  startIcon={<Facebook sx={{ color: "#1877F2" }} />}
+                  startIcon={<FacebookIcon height={30} />}
                   variant="outlined"
                   fullWidth
                   TouchRippleProps={{ style: { color: "#1877F2" } }}

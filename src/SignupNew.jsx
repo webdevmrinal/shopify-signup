@@ -39,6 +39,7 @@ import OGLogo from "./assets/OG-Logo.svg";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { LinkedInIcon, GoogleIcon, FacebookIcon } from "./Icons";
 
 const interests = [
   "Artificial Intelligence",
@@ -402,7 +403,7 @@ const SignupPage = () => {
                 }}
               >
                 <Button
-                  startIcon={<LinkedIn sx={{ color: "#0077B5" }} />}
+                  startIcon={<LinkedInIcon height={30} />}
                   variant="outlined"
                   fullWidth
                   sx={{
@@ -416,7 +417,7 @@ const SignupPage = () => {
                   TouchRippleProps={{ style: { color: "#0077B5" } }}
                 ></Button>
                 <Button
-                  startIcon={<Google sx={{ color: "#DB4437" }} />}
+                  startIcon={<GoogleIcon height={28} />}
                   variant="outlined"
                   fullWidth
                   TouchRippleProps={{ style: { color: "#DB4437" } }}
@@ -429,7 +430,7 @@ const SignupPage = () => {
                   }}
                 ></Button>
                 <Button
-                  startIcon={<Facebook sx={{ color: "#1877F2" }} />}
+                  startIcon={<FacebookIcon height={30} />}
                   variant="outlined"
                   fullWidth
                   TouchRippleProps={{ style: { color: "#1877F2" } }}
