@@ -3,6 +3,14 @@ import Page1 from "./Page1";
 import Page2 from "./Page2";
 import SignupNew from "./SignupNew";
 import { AnimatePresence, motion } from "framer-motion";
+<<<<<<< Updated upstream
+=======
+import OGLogo from "./assets/OG-Logo.svg";
+import { useNavigate } from "react-router-dom";
+import Header from "./Header";
+import Footer from "./Footer";
+
+>>>>>>> Stashed changes
 function App() {
   const [step, setStep] = useState(1);
   const [showSignUp, setShowSignUp] = useState(false);
@@ -17,6 +25,7 @@ function App() {
 
   return (
     <>
+    <Header />
       <AnimatePresence
       // onExitComplete={() => {
       //   if (step > 100) {
@@ -34,6 +43,7 @@ function App() {
           >
             <div className="px-5 md:px-14 w-full h-screen md:max-w-4xl md:h-[48rem] bg-white md:rounded-xl flex flex-col">
               {/* Logo */}
+<<<<<<< Updated upstream
               <div className="pt-5 md:pt-12">
                 <svg
                   aria-hidden="true"
@@ -47,6 +57,11 @@ function App() {
                 
                 </svg>
               </div>
+=======
+              {/* <div className="pt-5 md:pt-12">
+                <img src={OGLogo} alt="opengrowth-logo" className="h-12" />
+              </div> */}
+>>>>>>> Stashed changes
               {/* Bar */}
               <div className="w-full my-5">
                 <div className="h-2 bg-[#e3e3e3] rounded-full overflow-hidden">
@@ -95,6 +110,7 @@ function App() {
           </motion.div>
         )}
       </AnimatePresence>
+      <Footer />
 
       {step > 100 && (
         <motion.div

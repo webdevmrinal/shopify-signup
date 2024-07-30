@@ -74,7 +74,12 @@ const Footer = () => {
                   variant="body2"
                   color="text.secondary"
                   key={item}
+<<<<<<< Updated upstream
                   sx={{ mb: 0.5 }}
+=======
+                  // sx={{ textTransform: "uppercase" }}
+                  textAlign={"center"}
+>>>>>>> Stashed changes
                 >
                   <Link href="#" color="inherit" underline="hover">
                     {item}

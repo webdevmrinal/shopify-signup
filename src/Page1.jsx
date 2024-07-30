@@ -14,7 +14,7 @@ function Page1() {
           <label className="w-full h-full block radio" htmlFor="exp-1">
             <input type="radio" id="exp-1" name="exp" />
             <span className="text-sm font-light inline-block w-full h-full py-5">
-              I'm just starting
+              I'm a user
             </span>
           </label>
         </li>
@@ -22,7 +22,7 @@ function Page1() {
           <label className="w-full h-full radio" htmlFor="exp-2">
             <input type="radio" id="exp-2" name="exp" />
             <span className="text-sm font-light inline-block w-full h-full py-5">
-              I’m already selling online or in person
+              I’m an expert
             </span>
           </label>
         </li>
