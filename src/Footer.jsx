@@ -80,7 +80,7 @@ const Footer = () => {
                   color="text.secondary"
                   fontSize={12}
                   key={item}
-                  sx={{ textTransform: "uppercase" }}
+                  // sx={{ textTransform: "uppercase" }}
                   textAlign={"center"}
                 >
                   <Link href="#" color="inherit" underline="hover">

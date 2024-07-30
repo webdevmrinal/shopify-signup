@@ -4,6 +4,8 @@ import Page2 from "./Page2";
 import { AnimatePresence, motion } from "framer-motion";
 import OGLogo from "./assets/OG-Logo.svg";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
+import Footer from "./Footer";
 
 function App() {
   const [step, setStep] = useState(1);
@@ -27,6 +29,7 @@ function App() {
 
   return (
     <>
+    <Header />
       <AnimatePresence
       // onExitComplete={() => {
       //   if (step > 100) {
@@ -44,9 +47,9 @@ function App() {
           >
             <div className="px-5 md:px-14 w-full h-screen md:max-w-4xl md:h-[48rem] bg-white md:rounded-xl flex flex-col shadow-lg border">
               {/* Logo */}
-              <div className="pt-5 md:pt-12">
+              {/* <div className="pt-5 md:pt-12">
                 <img src={OGLogo} alt="opengrowth-logo" className="h-12" />
-              </div>
+              </div> */}
               {/* Bar */}
               <div className="w-full my-5">
                 <div className="h-2 bg-[#e3e3e3] rounded-full overflow-hidden">
@@ -95,6 +98,7 @@ function App() {
           </motion.div>
         )}
       </AnimatePresence>
+      <Footer />
 
       {/* {step > 100 && (
         <motion.div
