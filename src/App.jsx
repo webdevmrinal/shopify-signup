@@ -12,6 +12,13 @@ function App() {
   const [showSignUp, setShowSignUp] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.fromSignup) {
+      setStep(100);
+    }
+  }, [location]);
 
   useEffect(() => {
     if (step > 100) {
@@ -20,18 +27,37 @@ function App() {
   }, [step, navigate]);
 
   const renderPage = () => {
-    if (step < 10) {
+    if (step < 50) {
       return <Page1 />;
-    } else if (step >= 10 && step < 100) {
+    } else if (step >= 50 && step <= 100) {
       return <Page2 />;
     }
+  };
+
+  const handleBack = () => {
+    if (location.state && location.state.fromSignup) {
+      setStep(1);
+    } else if (step > 1) {
+      setStep(Math.max(1, step - 60));
+    }
+  };
+
+  const handleNext = () => {
+    if (step < 100) {
+      setStep(100);
+    } else {
+      navigate("/signup");
+    }
+  };
+
+  const handleSkipAll = () => {
+    navigate("/signup");
   };
 
   return (
     <>
       <Header />
-      <AnimatePresence
-      >
+      <AnimatePresence>
         {step <= 100 && (
           <motion.div
             initial={{ opacity: 0, x: -75 }}
@@ -58,7 +84,7 @@ function App() {
                 <div className="">
                   <button
                     className="text-sm text-[#616161] py-2"
-                    onClick={() => setStep(step > 1 ? step - 100 / 2 : step)}
+                    onClick={handleBack}
                   >
                     &lt; Back
                   </button>
@@ -66,19 +92,19 @@ function App() {
                 <div className="space-x-3">
                   <button
                     className="text-sm text-[#616161]"
-                    onClick={() => setStep(101)}
+                    onClick={handleSkipAll}
                   >
                     Skip All
                   </button>
                   <button
                     className="text-sm text-[#616161]"
-                    onClick={() => setStep(step < 100 ? step + 100 / 2 : step)}
+                    onClick={handleNext}
                   >
                     Skip
                   </button>
                   <button
                     className="px-3 py-2 rounded-lg text-sm font-medium bg-[#3f3f3f] text-white"
-                    onClick={() => setStep(step < 100 ? step + 100 / 2 : step)}
+                    onClick={handleNext}
                   >
                     Next
                   </button>
@@ -89,20 +115,6 @@ function App() {
         )}
       </AnimatePresence>
       <Footer />
-
-      {/* {step > 100 && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 50 }}
-          transition={{ ease: "easeOut", duration: 0.3, delay: 0.47 }}
-          className="fixed top-0 left-0 w-full h-full flex items-center justify-center"
-        >
-          <div className="h-screen w-screen overflow-y-scroll bg-white">
-            <SignupNew />
-          </div>
-        </motion.div>
-      )} */}
     </>
   );
 }

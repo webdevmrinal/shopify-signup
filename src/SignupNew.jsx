@@ -636,7 +636,12 @@ const SignupPage = () => {
                     xs={12}
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <Button variant="contained" color="primary" type="submit">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      fullWidth
+                    >
                       Register Now
                     </Button>
                   </Grid>
@@ -668,6 +673,15 @@ const SignupPage = () => {
           </Grid>
         </Grid>
       </Container>
+
+      <button
+        className="px-4 py-2 mx-4 my-4 rounded-md bg-zinc-700 text-white font-semibold"
+        onClick={() => {
+          navigate("/", { state: { fromSignup: true } });
+        }}
+      >
+        Back
+      </button>
 
       <Footer />
     </Box>

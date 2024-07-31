@@ -273,7 +273,7 @@ const LoginPage = () => {
           container
           spacing={4}
           justifyContent="center"
-          alignItems={"center"}
+          alignItems={"flex-start"}
         >
           <Grid item xs={12} md={6}>
             <Slider {...settings}>
@@ -295,10 +295,11 @@ const LoginPage = () => {
             </Slider>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} height={"730px"}>
             <Paper
               elevation={0}
               sx={{
+                height:"100%",
                 borderRadius: "16px",
                 border: "1px solid lightgray",
               }}
@@ -450,7 +451,7 @@ const LoginPage = () => {
                     xs={12}
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <Button variant="contained" color="primary" type="submit">
+                    <Button variant="contained" color="primary" type="submit" fullWidth>
                       Login
                     </Button>
                   </Grid>
