@@ -18,6 +18,8 @@ import {
   Paper,
   Menu,
   Drawer,
+  Snackbar,
+  Alert,
   List,
   ListItem,
   ListItemText,
@@ -114,6 +116,17 @@ const SignupPage = ({onBack}) => {
   const [selectedInterests, setSelectedInterests] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [step, setStep] = useState(1);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const [open, setOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    interest: [],
+    country: "",
+  });
 
   const navigate = useNavigate();
 
@@ -128,9 +141,6 @@ const SignupPage = ({onBack}) => {
   const handleBack = () => {
     setStep(1); // Navigate back to Page 2
   };
-  const handleChange = (event, newValue) => {
-    setSelectedInterests(newValue);
-  };
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -140,6 +150,18 @@ const SignupPage = ({onBack}) => {
       return;
     }
     setDrawerOpen(open);
+  };
+
+  
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    console.log(`name: ${name}, value: ${value}`);
+    setFormData({ ...formData, [name]: value });
+  };
+  const handleInterestChange = (event, newValue) => {
+    console.log(`Selected Interests: ${newValue}`);
+    setSelectedInterests(newValue);
+    setFormData({ ...formData, interest: newValue });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -160,7 +182,6 @@ const SignupPage = ({onBack}) => {
         setSnackbarMessage("Data submitted successfully!");
         setSnackbarSeverity("success");
         setOpen(true);
-        // Reload the page after a successful submission
         setTimeout(() => {
           window.location.reload();
         }, 2000); // Adjust the timeout as needed
@@ -188,6 +209,7 @@ const SignupPage = ({onBack}) => {
     }
     setOpen(false);
   };
+  
 
   const navItems = [
     { title: "Hire", items: ["Find Talent", "Post a Job", "Hiring Solutions"] },
@@ -263,9 +285,15 @@ const SignupPage = ({onBack}) => {
                 fontWeight: "600",
                 fontSize: "1em",
                 textTransform: "capitalize",
+                borderRadius: "2em", // Default border radius
+                padding: "0.5em 1em", // Default padding
                 "&:hover": {
-                  background: "transparent",
-                  textDecoration: "underline",
+                  background: "rgba(0, 0, 0, 0.1)", // Light background on hover
+                  borderRadius: "1.5em", // Border radius on hover
+                  padding: "0.7em 1.2em", // Increased padding on hover
+                },
+                "&:active": {
+                  background: "rgba(0, 0, 0, 0.2)", // Slightly darker background on click
                 },
               }}
               color="inherit"
@@ -279,9 +307,15 @@ const SignupPage = ({onBack}) => {
                 fontWeight: "600",
                 fontSize: "1em",
                 textTransform: "capitalize",
+                borderRadius: "2em", // Default border radius
+                padding: "0.5em 1em", // Default padding
                 "&:hover": {
-                  background: "transparent",
-                  textDecoration: "underline",
+                  background: "rgba(0, 0, 0, 0.1)", // Light background on hover
+                  borderRadius: "1.5em", // Border radius on hover
+                  padding: "0.7em 1.2em", // Increased padding on hover
+                },
+                "&:active": {
+                  background: "rgba(0, 0, 0, 0.2)", // Slightly darker background on click
                 },
               }}
               color="inherit"
@@ -478,111 +512,15 @@ const SignupPage = ({onBack}) => {
                 ></Button>
               </Box>
               <Divider sx={{ px: 4, my: 2, fontSize: ".75em" }}>OR</Divider>
-              <form style={{ padding: "0 2rem" }}>
+              <form style={{ padding: "0 2rem" }} onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <TextField
-                      fullWidth
-                      label={
-                        <>
-                          First Name <span style={{ color: "red" }}>*</span>
-                        </>
-                      }
-                      InputLabelProps={{
-                        sx: {
-                          "& .MuiInputLabel-asterisk": {
-                            display: "none",
-                          },
-                        },
-                      }}
-                      variant="outlined"
-                      required
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      fullWidth
-                      label={
-                        <>
-                          Last Name <span style={{ color: "red" }}>*</span>
-                        </>
-                      }
-                      InputLabelProps={{
-                        sx: {
-                          "& .MuiInputLabel-asterisk": {
-                            display: "none",
-                          },
-                        },
-                      }}
-                      variant="outlined"
-                      required
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      required
-                      label={
-                        <>
-                          Email Address <span style={{ color: "red" }}>*</span>
-                        </>
-                      }
-                      InputLabelProps={{
-                        sx: {
-                          "& .MuiInputLabel-asterisk": {
-                            display: "none",
-                          },
-                        },
-                      }}
-                      variant="outlined"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label={
-                        <>
-                          Password <span style={{ color: "red" }}>*</span>
-                        </>
-                      }
-                      InputLabelProps={{
-                        sx: {
-                          "& .MuiInputLabel-asterisk": {
-                            display: "none",
-                          },
-                        },
-                      }}
-                      type={showPassword ? "text" : "password"}
-                      variant="outlined"
-                      required
-                      InputProps={{
-                        endAdornment: (
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        ),
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Autocomplete
-                      multiple
-                      id="interest-selector"
-                      options={interests}
-                      value={selectedInterests}
-                      onChange={handleChange}
-                      renderInput={(params) => (
+                <Grid item xs={6}>
                         <TextField
-                          {...params}
-                          variant="outlined"
+                          fullWidth
+                          name="firstName"
                           label={
                             <>
-                              Interest <span style={{ color: "red" }}>*</span>
+                              First Name <span style={{ color: "red" }}>*</span>
                             </>
                           }
                           InputLabelProps={{
@@ -592,61 +530,178 @@ const SignupPage = ({onBack}) => {
                               },
                             },
                           }}
-                          placeholder="Select interests"
+                          variant="outlined"
+                          value={formData.firstName}
+                          onChange={handleChange}
                           required
                         />
-                      )}
-                      renderTags={(value, getTagProps) =>
-                        value.map((option, index) => (
-                          <Chip
-                            key={option}
-                            variant="primary"
-                            label={option}
-                            {...getTagProps({ index })}
-                          />
-                        ))
-                      }
-                    />
-                  </Grid>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TextField
+                          fullWidth
+                          name="lastName"
+                          label={
+                            <>
+                              Last Name <span style={{ color: "red" }}>*</span>
+                            </>
+                          }
+                          InputLabelProps={{
+                            sx: {
+                              "& .MuiInputLabel-asterisk": {
+                                display: "none",
+                              },
+                            },
+                          }}
+                          variant="outlined"
+                          value={formData.lastName}
+                          onChange={handleChange}
+                          required
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          required
+                          name="email"
+                          label={
+                            <>
+                              Email Address <span style={{ color: "red" }}>*</span>
+                            </>
+                          }
+                          InputLabelProps={{
+                            sx: {
+                              "& .MuiInputLabel-asterisk": {
+                                display: "none",
+                              },
+                            },
+                          }}
+                          variant="outlined"
+                          value={formData.email}
+                          onChange={handleChange}
+                        />
+                      </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      select
-                      label={
-                        <>
-                          Country <span style={{ color: "red" }}>*</span>
-                        </>
-                      }
-                      InputLabelProps={{
-                        sx: {
-                          "& .MuiInputLabel-asterisk": {
-                            display: "none",
-                          },
-                        },
-                      }}
-                      variant="outlined"
-                      required
-                    >
-                      {countries.map((country, index) => {
-                        return (
-                          <MenuItem value={country} key={country}>
-                            {country}
-                          </MenuItem>
-                        );
-                      })}
-                    </TextField>
-                  </Grid>
+                        <TextField
+                          fullWidth
+                          name="password"
+                          label={
+                            <>
+                              Password <span style={{ color: "red" }}>*</span>
+                            </>
+                          }
+                          InputLabelProps={{
+                            sx: {
+                              "& .MuiInputLabel-asterisk": {
+                                display: "none",
+                              },
+                            },
+                          }}
+                          type={showPassword ? "text" : "password"}
+                          variant="outlined"
+                          value={formData.password}
+                          onChange={handleChange}
+                          required
+                          InputProps={{
+                            endAdornment: (
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                              >
+                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                              </IconButton>
+                            ),
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Autocomplete
+                          multiple
+                          id="interest-selector"
+                          options={interests} // This should be an array
+                          value={selectedInterests} // This should be an array
+                          onChange={handleInterestChange}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              variant="outlined"
+                              label={
+                                <>
+                                  Interest <span style={{ color: "red" }}>*</span>
+                                </>
+                              }
+                              InputLabelProps={{
+                                sx: {
+                                  "& .MuiInputLabel-asterisk": {
+                                    display: "none",
+                                  },
+                                },
+                              }}
+                              placeholder="Select interests"
+                              // required
+                            />
+                          )}
+                          renderTags={(value, getTagProps) =>
+                            value.map((option, index) => (
+                              <Chip
+                                key={option}
+                                variant="primary"
+                                label={option}
+                                {...getTagProps({ index })}
+                              />
+                            ))
+                          }
+                        />
+
+                      </Grid>
+
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          select
+                          name="country"
+                          label={
+                            <>
+                              Country <span style={{ color: "red" }}>*</span>
+                            </>
+                          }
+                          InputLabelProps={{
+                            sx: {
+                              "& .MuiInputLabel-asterisk": {
+                                display: "none",
+                              },
+                            },
+                          }}
+                          variant="outlined"
+                          value={formData.country}
+                          required
+                          onChange={handleChange}
+                        >
+                          {countries.map((country, index) => (
+                            <MenuItem value={country} key={index}>
+                              {country}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+
+                      </Grid>
                   <Grid
                     item
                     xs={12}
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <Button variant="contained" color="primary" type="submit" sx={{ width: '100%' }} >
+                    <Button variant="contained" color="primary" type="submit" sx={{ width: '100%' }} onSubmit={handleSubmit} >
                       Register Now
                     </Button>
                   </Grid>
                 </Grid>
               </form>
+              <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+            <Alert onClose={handleClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+              {snackbarMessage}
+            </Alert>
+            </Snackbar>
               <Typography
                 color="secondary.main"
                 variant="body2"
@@ -735,7 +790,16 @@ const NavMenuItem = ({ title, items }) => {
           fontWeight: "600",
           fontSize: "1em",
           textTransform: "capitalize",
-          "&:hover": { background: "transparent", textDecoration: "underline" },
+          borderRadius: "2em",
+          padding: "0.5em 1em",
+          "&:hover": { 
+            background: "rgba(0, 0, 0, 0.1)", 
+            borderRadius: "1.5em",
+            padding: "0.7em 1.2em",
+          },
+          "&:active": { 
+            background: "rgba(0, 0, 0, 0.2)",
+          },
         }}
         TouchRippleProps={{ style: { color: "transparent" } }}
       >
@@ -748,7 +812,24 @@ const NavMenuItem = ({ title, items }) => {
         onClose={handleClose}
       >
         {items.map((item, index) => (
-          <MenuItem key={index} onClick={handleClose}>
+          <MenuItem
+            key={index}
+            onClick={handleClose}
+            sx={{ 
+              borderRadius: "2em", // Default border radius
+              padding: "0.5em 1em", // Default padding
+              "&:hover": { 
+                backgroundColor: "rgba(0, 0, 0, 0.1)", // Light background on hover
+                borderRadius: "1.5em", // Border radius on hover
+                padding: "0.7em 1.2em", // Increased padding on hover
+              }, 
+              "&:focus": { 
+                backgroundColor: "rgba(0, 0, 0, 0.1)", // Ensure focus also has background
+                borderRadius: "1.5em", // Border radius on focus
+                padding: "0.7em 1.2em", // Increased padding on focus
+              },
+            }} 
+          >
             {item}
           </MenuItem>
         ))}

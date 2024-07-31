@@ -136,9 +136,15 @@ const LoginPage = () => {
                 fontWeight: "600",
                 fontSize: "1em",
                 textTransform: "capitalize",
+                borderRadius: "2em", // Default border radius
+                padding: "0.5em 1em", // Default padding
                 "&:hover": {
-                  background: "transparent",
-                  textDecoration: "underline",
+                  background: "rgba(0, 0, 0, 0.1)", // Light background on hover
+                  borderRadius: "1.5em", // Border radius on hover
+                  padding: "0.7em 1.2em", // Increased padding on hover
+                },
+                "&:active": {
+                  background: "rgba(0, 0, 0, 0.2)", // Slightly darker background on click
                 },
               }}
               color="inherit"
@@ -152,9 +158,15 @@ const LoginPage = () => {
                 fontWeight: "600",
                 fontSize: "1em",
                 textTransform: "capitalize",
+                borderRadius: "2em", // Default border radius
+                padding: "0.5em 1em", // Default padding
                 "&:hover": {
-                  background: "transparent",
-                  textDecoration: "underline",
+                  background: "rgba(0, 0, 0, 0.1)", // Light background on hover
+                  borderRadius: "1.5em", // Border radius on hover
+                  padding: "0.7em 1.2em", // Increased padding on hover
+                },
+                "&:active": {
+                  background: "rgba(0, 0, 0, 0.2)", // Slightly darker background on click
                 },
               }}
               color="inherit"
@@ -165,7 +177,16 @@ const LoginPage = () => {
             <Button
               variant="contained"
               color="primary"
-              sx={{ borderRadius: "2em", textTransform: 'none', marginRight: 2 }}
+              sx={{ 
+                borderRadius: "2em", // Default border radius
+                textTransform: "none",
+                marginRight: 2,
+                padding: "0.5em 1em", // Default padding
+                "&:hover": {
+                  borderRadius: "1.5em", // Border radius on hover
+                  padding: "0.7em 1.2em", // Increased padding on hover
+                },
+              }}
               onClick={() => {
                 navigate("/signup");
               }}
@@ -198,9 +219,15 @@ const LoginPage = () => {
                 fontWeight: "600",
                 fontSize: "1em",
                 textTransform: "capitalize",
+                borderRadius: "2em", // Default border radius
+                padding: "0.5em 1em", // Default padding
                 "&:hover": {
-                  background: "transparent",
-                  textDecoration: "underline",
+                  background: "rgba(0, 0, 0, 0.1)", // Light background on hover
+                  borderRadius: "1.5em", // Border radius on hover
+                  padding: "0.7em 1.2em", // Increased padding on hover
+                },
+                "&:active": {
+                  background: "rgba(0, 0, 0, 0.2)", // Slightly darker background on click
                 },
               }}
               color="inherit"
@@ -214,9 +241,15 @@ const LoginPage = () => {
                 fontWeight: "600",
                 fontSize: "1em",
                 textTransform: "capitalize",
+                borderRadius: "2em", // Default border radius
+                padding: "0.5em 1em", // Default padding
                 "&:hover": {
-                  background: "transparent",
-                  textDecoration: "underline",
+                  background: "rgba(0, 0, 0, 0.1)", // Light background on hover
+                  borderRadius: "1.5em", // Border radius on hover
+                  padding: "0.7em 1.2em", // Increased padding on hover
+                },
+                "&:active": {
+                  background: "rgba(0, 0, 0, 0.2)", // Slightly darker background on click
                 },
               }}
               color="inherit"
@@ -227,7 +260,16 @@ const LoginPage = () => {
             <Button
               variant="contained"
               color="primary"
-              sx={{ borderRadius: "2em" , textTransform: 'none'}}
+              sx={{ 
+                borderRadius: "2em", // Default border radius
+                textTransform: "none",
+                marginRight: 2,
+                padding: "0.5em 1em", // Default padding
+                "&:hover": {
+                  borderRadius: "1.5em", // Border radius on hover
+                  padding: "0.7em 1.2em", // Increased padding on hover
+                },
+              }}
               onClick={() => navigate("/signup")}
             >
               Sign Up
@@ -457,7 +499,16 @@ const NavMenuItem = ({ title, items }) => {
           fontWeight: "600",
           fontSize: "1em",
           textTransform: "capitalize",
-          "&:hover": { background: "transparent", textDecoration: "underline" },
+          borderRadius: "2em",
+          padding: "0.5em 1em",
+          "&:hover": { 
+            background: "rgba(0, 0, 0, 0.1)", 
+            borderRadius: "1.5em",
+            padding: "0.7em 1.2em",
+          },
+          "&:active": { 
+            background: "rgba(0, 0, 0, 0.2)",
+          },
         }}
         TouchRippleProps={{ style: { color: "transparent" } }}
       >
@@ -470,7 +521,24 @@ const NavMenuItem = ({ title, items }) => {
         onClose={handleClose}
       >
         {items.map((item, index) => (
-          <MenuItem key={index} onClick={handleClose}>
+          <MenuItem
+            key={index}
+            onClick={handleClose}
+            sx={{ 
+              borderRadius: "2em", // Default border radius
+              padding: "0.5em 1em", // Default padding
+              "&:hover": { 
+                backgroundColor: "rgba(0, 0, 0, 0.1)", // Light background on hover
+                borderRadius: "1.5em", // Border radius on hover
+                padding: "0.7em 1.2em", // Increased padding on hover
+              }, 
+              "&:focus": { 
+                backgroundColor: "rgba(0, 0, 0, 0.1)", // Ensure focus also has background
+                borderRadius: "1.5em", // Border radius on focus
+                padding: "0.7em 1.2em", // Increased padding on focus
+              },
+            }} 
+          >
             {item}
           </MenuItem>
         ))}
