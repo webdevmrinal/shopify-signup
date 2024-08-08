@@ -119,73 +119,83 @@ const platforms = [
 function Page2() {
   return (
     <>
-    <div>
-      <h1 className="pt-3 font-bold text-xl text-[#303030]">
-        I'm interested in courses categories
-      </h1>
+      <div>
+        <h1 className="pt-3 font-bold text-xl text-[#303030]">
+          I'm interested in courses categories
+        </h1>
 
-      <span className="text-[0.875rem] text-[#616161]">
-        Do you already sell through a POS, marketplace, or ecommerce platform?
-        We can help you import your store.
-      </span>
+        <span className="text-[0.875rem] text-[#616161]">
+          Do you already sell through a POS, marketplace, or ecommerce platform?
+          We can help you import your store.
+        </span>
 
-      <div className="relative mt-4">
-        <h1 className="mb-2 text-lg font-semibold">Courses</h1>
-        <ul className="w-full pb-8 grid gap-4 grid-cols-2 max-h-56 overflow-y-auto">
-          {platforms.map((platform, index) => (
-            <li
-              key={index}
-              className="w-full border rounded-md hover:bg-[#f7f7f7]"
-            >
-              <label
-                className="w-full h-full block radio relative p-2"
-                htmlFor={`course-${index}`}
+        <div className="relative mt-4">
+          <h1 className="mb-2 text-lg font-semibold">Courses</h1>
+          <ul className="w-full pb-8 grid gap-4 grid-cols-2 max-h-56 overflow-y-auto">
+            {platforms.map((platform, index) => (
+              <li
+                key={index}
+                className="w-full border rounded-md hover:bg-[#f7f7f7]"
               >
-                <input type="radio" id={`course-${index}`} name="course" />
-                <span className="text-sm font-light inline-block w-full h-full py-5">
-                  {platform.name}
-                </span>
-                {platform.imageLink && (
-                  <img
-                    className="absolute right-2 top-1/2 -translate-y-1/2"
-                    src={platform.imageLink}
-                    alt={platform.name}
+                <label
+                  className="w-full h-full block relative p-2 flex items-center"
+                  htmlFor={`course-${index}`}
+                >
+                  <input
+                    type="checkbox"
+                    id={`course-${index}`}
+                    name="course"
+                    className="mr-2"
                   />
-                )}
-              </label>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="relative mt-4">
-        <h1 className="mb-2 text-lg font-semibold">Experts</h1>
-        <ul className="w-full pb-8 grid gap-4 grid-cols-2 max-h-56 overflow-y-auto">
-          {platforms.map((platform, index) => (
-            <li
-              key={index}
-              className="w-full border rounded-md hover:bg-[#f7f7f7]"
-            >
-              <label
-                className="w-full h-full block radio relative p-2"
-                htmlFor={`exp-${index}`}
+                  <span className="text-sm font-light flex-1 py-5">
+                    {platform.name}
+                  </span>
+                  {platform.imageLink && (
+                    <img
+                      className="ml-2 h-8"
+                      src={platform.imageLink}
+                      alt={platform.name}
+                    />
+                  )}
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="relative mt-4">
+          <h1 className="mb-2 text-lg font-semibold">Experts</h1>
+          <ul className="w-full pb-8 grid gap-4 grid-cols-2 max-h-56 overflow-y-auto">
+            {platforms.map((platform, index) => (
+              <li
+                key={index}
+                className="w-full border rounded-md hover:bg-[#f7f7f7]"
               >
-                <input type="radio" id={`exp-${index}`} name="exp" />
-                <span className="text-sm font-light inline-block w-full h-full py-5">
-                  {platform.name}
-                </span>
-                {platform.imageLink && (
-                  <img
-                    className="absolute right-2 top-1/2 -translate-y-1/2"
-                    src={platform.imageLink}
-                    alt={platform.name}
+                <label
+                  className="w-full h-full block relative p-2 flex items-center"
+                  htmlFor={`exp-${index}`}
+                >
+                  <input
+                    type="checkbox"
+                    id={`exp-${index}`}
+                    name="exp"
+                    className="mr-2"
                   />
-                )}
-              </label>
-            </li>
-          ))}
-        </ul>
+                  <span className="text-sm font-light flex-1 py-5">
+                    {platform.name}
+                  </span>
+                  {platform.imageLink && (
+                    <img
+                      className="ml-2 h-8"
+                      src={platform.imageLink}
+                      alt={platform.name}
+                    />
+                  )}
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
     </>
   );
 }

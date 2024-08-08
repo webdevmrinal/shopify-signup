@@ -372,7 +372,7 @@ const LoginPage = () => {
                   <Grid item xs={12}>
                     <TextField
                       fullWidth
-                      required
+                      // required
                       label={
                         <>
                           Email Address <span style={{ color: "red" }}>*</span>
@@ -410,7 +410,7 @@ const LoginPage = () => {
                       }}
                       type={showPassword ? "text" : "password"}
                       variant="outlined"
-                      required
+                      // required
                       {...formik.getFieldProps("password")}
                       error={
                         formik.touched.password &&

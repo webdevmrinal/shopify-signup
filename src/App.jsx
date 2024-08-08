@@ -60,13 +60,15 @@ function App() {
       <AnimatePresence>
         {step <= 100 && (
           <motion.div
+            style={{ paddingTop: '20px', marginBottom: '20px', marginTop: '12px' }}
             initial={{ opacity: 0, x: -75 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -75 }}
             transition={{ ease: "easeOut", duration: 0.3 }}
             className="md:h-screen md:w-screen md:flex md:items-center md:justify-center relative z-10"
           >
-            <div className="px-5 md:px-14 w-full h-screen md:max-w-4xl md:h-[48rem] bg-white md:rounded-xl flex flex-col shadow-lg border">
+            <div className="px-5 md:px-14 w-full h-screen md:max-w-4xl md:h-[48rem] bg-white md:rounded-xl flex flex-col shadow-lg border"
+            style={{ maxWidth: '91rem' }}>
               <div className="w-full my-5">
                 <div className="h-2 bg-[#e3e3e3] rounded-full overflow-hidden">
                   <div

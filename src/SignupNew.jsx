@@ -243,9 +243,15 @@ const SignupPage = () => {
                 fontWeight: "600",
                 fontSize: "1em",
                 textTransform: "capitalize",
+                borderRadius: "2em", // Default border radius
+                padding: "0.5em 1em", // Default padding
                 "&:hover": {
-                  background: "transparent",
-                  textDecoration: "underline",
+                  background: "rgba(0, 0, 0, 0.1)", // Light background on hover
+                  borderRadius: "1.5em", // Border radius on hover
+                  padding: "0.7em 1.2em", // Increased padding on hover
+                },
+                "&:active": {
+                  background: "rgba(0, 0, 0, 0.2)", // Slightly darker background on click
                 },
               }}
               color="inherit"
@@ -259,9 +265,15 @@ const SignupPage = () => {
                 fontWeight: "600",
                 fontSize: "1em",
                 textTransform: "capitalize",
+                borderRadius: "2em", // Default border radius
+                padding: "0.5em 1em", // Default padding
                 "&:hover": {
-                  background: "transparent",
-                  textDecoration: "underline",
+                  background: "rgba(0, 0, 0, 0.1)", // Light background on hover
+                  borderRadius: "1.5em", // Border radius on hover
+                  padding: "0.7em 1.2em", // Increased padding on hover
+                },
+                "&:active": {
+                  background: "rgba(0, 0, 0, 0.2)", // Slightly darker background on click
                 },
               }}
               color="inherit"
@@ -272,7 +284,16 @@ const SignupPage = () => {
             <Button
               variant="contained"
               color="primary"
-              sx={{ borderRadius: "2em" }}
+              sx={{ 
+                borderRadius: "2em", // Default border radius
+                textTransform: "none",
+                marginRight: 2,
+                padding: "0.5em 1em", // Default padding
+                "&:hover": {
+                  borderRadius: "1.5em", // Border radius on hover
+                  padding: "0.7em 1.2em", // Increased padding on hover
+                },
+              }}
               onClick={() => navigate("/login")}
             >
               Login
@@ -339,7 +360,7 @@ const SignupPage = () => {
             <Button
               variant="contained"
               color="primary"
-              sx={{ borderRadius: "2em" }}
+              sx={{ borderRadius: "2em" ,textTransform: "none", marginRight: 2 }}
               onClick={() => navigate("/login")}
             >
               Login
@@ -349,8 +370,15 @@ const SignupPage = () => {
       </Drawer>
 
       <Container
-        maxWidth="xl"
-        sx={{ mt: 4, pb: 12 }}
+        maxWidth="l"
+        sx={{
+          mt: 4,
+          pb: 3,
+          maxWidth: '1462px', // Set custom maxWidth
+          border: '1px solid lightgray', // Apply additional styling if needed
+          borderRadius: '16px', // Apply additional styling if needed
+          boxShadow: '0px 4px 8px rgba(0,0,0,0.1)', // Apply additional styling if needed
+        }}
         className="md:border md:mb-6 md:pt-6 md:shadow-lg md:rounded-xl"
       >
         <Grid
@@ -473,7 +501,7 @@ const SignupPage = () => {
                       helperText={
                         formik.touched.firstName && formik.errors.firstName
                       }
-                      required
+                      // required
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -492,7 +520,7 @@ const SignupPage = () => {
                         },
                       }}
                       variant="outlined"
-                      required
+                      // required
                       {...formik.getFieldProps("lastName")}
                       error={
                         formik.touched.lastName &&
@@ -506,7 +534,7 @@ const SignupPage = () => {
                   <Grid item xs={12}>
                     <TextField
                       fullWidth
-                      required
+                      // required
                       label={
                         <>
                           Email Address <span style={{ color: "red" }}>*</span>
@@ -544,7 +572,7 @@ const SignupPage = () => {
                       }}
                       type={showPassword ? "text" : "password"}
                       variant="outlined"
-                      required
+                      // required
                       {...formik.getFieldProps("password")}
                       error={
                         formik.touched.password &&
@@ -571,7 +599,7 @@ const SignupPage = () => {
                     <Autocomplete
                       multiple
                       id="interests"
-                      required
+                      // required
                       options={interests}
                       getOptionLabel={(option) => option}
                       value={formik.values.interests}
@@ -613,7 +641,7 @@ const SignupPage = () => {
                         },
                       }}
                       variant="outlined"
-                      required
+                      // required
                       {...formik.getFieldProps("country")}
                       error={
                         formik.touched.country && Boolean(formik.errors.country)
@@ -672,16 +700,46 @@ const SignupPage = () => {
             </Typography>
           </Grid>
         </Grid>
+        <div className="w-full flex items-center justify-between md:flex-1 md:place-items-end md:pb-6">
+                <div className="">
+                <button className="text-sm text-[#616161] py-2"
+                onClick={() => {
+                  navigate("/", { state: { fromSignup: true } });
+                }}
+                style={{ marginTop: '3em' }}>
+                      &lt; Back
+                    </button>
+                </div>
+                <div className="space-x-3">
+                  {/* <button
+                    className="text-sm text-[#616161]"
+                    onClick={() => setStep(101)}
+                  >
+                    Skip All
+                  </button>
+                  <button
+                    className="text-sm text-[#616161]"
+                    onClick={() => setStep(step < 100 ? step + 100 / 2 : step)}
+                  >
+                    Skip
+                  </button>
+                  <button
+                    className="px-3 py-2 rounded-lg text-sm font-medium bg-[#3f3f3f] text-white"
+                    onClick={() => setStep(step < 100 ? step + 100 / 2 : step)}
+                  >
+                    Next
+                  </button> */}
+                </div>
+              </div>
       </Container>
-
+{/* 
       <button
-        className="px-4 py-2 mx-4 my-4 rounded-md bg-zinc-700 text-white font-semibold"
         onClick={() => {
           navigate("/", { state: { fromSignup: true } });
         }}
       >
         Back
-      </button>
+      </button> */}
 
       <Footer />
     </Box>
@@ -713,7 +771,16 @@ const NavMenuItem = ({ title, items }) => {
           fontWeight: "600",
           fontSize: "1em",
           textTransform: "capitalize",
-          "&:hover": { background: "transparent", textDecoration: "underline" },
+          borderRadius: "2em",
+          padding: "0.5em 1em",
+          "&:hover": { 
+            background: "rgba(0, 0, 0, 0.1)", 
+            borderRadius: "1.5em",
+            padding: "0.7em 1.2em",
+          },
+          "&:active": { 
+            background: "rgba(0, 0, 0, 0.2)",
+          },
         }}
         TouchRippleProps={{ style: { color: "transparent" } }}
       >
@@ -726,7 +793,22 @@ const NavMenuItem = ({ title, items }) => {
         onClose={handleClose}
       >
         {items.map((item, index) => (
-          <MenuItem key={index} onClick={handleClose}>
+          <MenuItem key={index} onClick={handleClose}
+          sx={{ 
+            borderRadius: "2em", // Default border radius
+            padding: "0.5em 1em", // Default padding
+            "&:hover": { 
+              backgroundColor: "rgba(0, 0, 0, 0.1)", // Light background on hover
+              borderRadius: "1.5em", // Border radius on hover
+              padding: "0.7em 1.2em", // Increased padding on hover
+            }, 
+            "&:focus": { 
+              backgroundColor: "rgba(0, 0, 0, 0.1)", // Ensure focus also has background
+              borderRadius: "1.5em", // Border radius on focus
+              padding: "0.7em 1.2em", // Increased padding on focus
+            },
+          }} 
+          >
             {item}
           </MenuItem>
         ))}
